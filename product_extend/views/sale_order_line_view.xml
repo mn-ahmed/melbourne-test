@@ -1,0 +1,35 @@
+<odoo>
+  <data>    
+    <record id="sale_order_view_order_form_inherit" model="ir.ui.view">
+      <field name="name">sale.order.form.inherit</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="after">
+          <field name="brand_id" options='{"no_open": True,"no_create":True}' optional='hide'/>
+        </xpath>
+      </field>
+    </record>
+    <record id="view_sales_order_filter_inhe" model="ir.ui.view">
+        <field name="name">sale.order.search.inhe</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/field[@name='team_id']" position="after">
+              <field name="order_line" string="Category" filter_domain="[('order_line.brand_id', 'ilike', self)]"/>
+            </xpath>
+        </field> 
+    </record>
+
+    <record id="view_order_product_search_inherit" model="ir.ui.view">
+        <field name="name">sale.report.search</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+           <xpath expr="//filter[@name='Category']" position="replace">
+                <filter string="Product Brand" name="Category" context="{'group_by':'categ_id'}"/>
+           </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

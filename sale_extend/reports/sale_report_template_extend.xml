@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!--    <template id="report_sale_order_document_custom_sub_template">-->
+<!--        <div class="header" inherit_id="report_form.external_layout_standard_header">-->
+<!--            <div class="row" style="width:100%;padding-top:5px;font-size:14px;font-family:zawgyione;">-->
+<!--                    <div style="width:40%">-->
+<!--                        <div name="invoice" style="width:100%;padding-top:60px;">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div style="width:40%;">-->
+
+<!--                    </div>-->
+<!--                    <div class="col-3 mb4">-->
+<!--                        <img t-if="o.branch_id.logo" t-att-src="image_data_uri(o.branch_id.logo)" class="float-right" style="max-height: 140px;width:320px;" alt="Logo"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--        </div>-->
+<!--        <t t-call="web.external_layout">-->
+<!--            <t t-set="o" t-value="o.with_context(lang=lang)" />-->
+<!--            <div class="page" style="font-size:14px;font-family:zawgyione;">-->
+<!--                &lt;!&ndash;  ZNL 1-9-2020 THIS h2  is new added and insert style="font-weight:bold"&ndash;&gt;-->
+<!--                    <h2>-->
+<!--                        <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">-->
+<!--                            <span t-if="o.state not in ['draft','sent']" style="font-weight:bold">Order</span>-->
+<!--                            <span t-if="o.state in ['draft','sent']" style="font-weight:bold">Quotation</span>-->
+<!--                        </t>-->
+<!--                    </h2>-->
+<!--                    <br/>-->
+<!--                    <div class="row" style="width:100%">-->
+<!--                    <div class="col-md-8" style="width:60%">-->
+<!--                        <div class="row" style="width:100%">-->
+<!--                                <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Attention To</span>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.contact_id"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                                <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                        <span>Customer Name</span>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="width:1%;text-align:right;">:</div>-->
+<!--                                <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                     <t t-esc="o.partner_id.name"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Contact Name</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right;">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.contact_id"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                <span>Contact Phone</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.contact_phone"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                <span>Accept Person</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.accept_person"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                <span>Delivery Address</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                              <span t-field='o.contact_address'/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                                <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Delivery Date</span>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                   <t t-if="o.delivery_date">-->
+<!--                                       <t t-esc="o.delivery_date.strftime('%d-%m-%Y')"/>-->
+<!--                                   </t>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4" style="width:40%">-->
+<!--                        <div class="row" style="width:100$">-->
+<!--                            <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                <span>Date</span>-->
+<!--                               </div>-->
+<!--                               <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                               <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-if="o.date_order">-->
+<!--                                        <t t-esc="o.date_order.strftime('%d-%m-%Y')"/>-->
+<!--                                    </t>-->
+<!--                               </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="row" style="width:100$">-->
+<!--                               <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                   <span>Sale Order No</span>-->
+<!--                               </div>-->
+<!--                               <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                               <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-esc="o.name"/>-->
+<!--                               </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="row" style="width:100$">-->
+<!--                               <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                   <span>Sale By</span>-->
+<!--                               </div>-->
+<!--                               <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                               <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-esc="o.sale_by.name"/>-->
+<!--                               </div>-->
+<!--                            </div>-->
+<!--                            <br/>-->
+<!--                            <div class="row" style="width:100$">-->
+<!--                                   <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                       <span>Reference</span>-->
+<!--                                   </div>-->
+<!--                                   <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                   <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--&lt;!&ndash;                                        <t t-esc="o.sale_reference"/>&ndash;&gt;-->
+<!--                                   </div>-->
+<!--                                </div>-->
+
+<!--&lt;!&ndash;                          ZNL 1-9-2020 THIS PriceList DIV is new added&ndash;&gt;-->
+<!--                         <div class="row" style="width:100$">-->
+<!--                                   <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                       <span>Pricelist</span>-->
+<!--                                   </div>-->
+<!--                                   <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                   <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                        <t t-esc="o.pricelist_id.name"/> (<t t-esc="o.currency_id.name"/>)-->
+<!--                                   </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                    </div>-->
+<!--                    <table class="table table-sm o_main_table" name="invoice_line_table" style="margin-top:10px">-->
+<!--                        <thead>-->
+<!--                             <tr style="border-top: 1px solid black;border-bottom: 1px solid black ;">-->
+<!--                                <t t-set="colspan" t-value="5"/>-->
+<!--                                <th class="text" style="width:5%;color:black;border:1px solid black;vertical-align:middle;text-align:center">No.</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Image</th>-->
+<!--                                <th class="text" style="width:35%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Item Code</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Unit Price</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Dis %</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Qty</th>-->
+<!--                                <th class="text" style="width:20%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Amount</th>-->
+<!--                             </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody class="invoice_tbody">-->
+<!--                            <t t-set="current_subtotal" t-value="0"/>-->
+<!--                            <t t-set="no" t-value="0"/>-->
+<!--                             <tr t-foreach="o.order_line" t-as="move" style="border:1px solid black;">-->
+<!--                                 <t t-set="no" t-value="no+1"/>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <span t-esc="no"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+
+<!--                                    </td>-->
+<!--                                    <td style="text-align:left;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <span t-field="move.product_id.default_code"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                      <t t-if="move.price_unit==0">-->
+<!--                                        <span>-</span>-->
+<!--                                      </t>-->
+<!--                                      <t t-else="">-->
+<!--                                        <span t-esc="'{:.0f}'.format(move.price_unit)"/>-->
+<!--                                      </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <t t-if="move.discount_amount==0">-->
+<!--                                          <span>-</span>-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                          <span t-esc="'{:.0f}'.format(move.discount_amount)"/>-->
+<!--                                          <t t-if="move.discount_type=='percentage'">-->
+<!--                                              <span> %</span>-->
+<!--                                          </t>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <t t-if="move.product_id.type == 'service'">-->
+<!--                                            <span>-</span>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="move.product_id.type != 'service'">-->
+<!--                                          <t t-if="move.product_uom_qty==0">-->
+<!--                                            <span>-</span>-->
+<!--                                          </t>-->
+<!--                                          <t t-else="">-->
+<!--                                            <span t-esc="'{:.0f}'.format(move.product_uom_qty)"/>-->
+<!--                                          </t>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:right;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                      <t t-if="move.total_amt==0">-->
+<!--                                        <span>-</span>-->
+<!--                                      </t>-->
+<!--                                      <t t-else="">-->
+<!--                                        <span t-esc="'{:.0f}'.format(move.total_amt)"/>-->
+<!--                                      </t>-->
+<!--                                    </td>-->
+<!--                             </tr>-->
+<!--                              <tr style="border-top: 1px solid black;">-->
+<!--                                <t t-set="colspan" t-value="5"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Total</th>-->
+<!--                                <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:center">-->
+
+<!--                                </th>-->
+<!--                                <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+
+<!--                                </th>-->
+<!--                             </tr>-->
+<!--                              <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">After Line Discount</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                <t t-if="o.amount_total_line_disc==0">-->
+<!--                                  <span>-</span>-->
+<!--                                </t>-->
+<!--                                <t t-else="">-->
+<!--                                 <span t-esc="'{:.0f}'.format(o.amount_total_line_disc)"/>-->
+<!--                                </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                              <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Tax</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                  <t t-if="o.amount_tax==0">-->
+<!--                                    <span>-</span>-->
+<!--                                  </t>-->
+<!--                                  <t t-else="">-->
+<!--                                    <span t-esc="'{:.0f}'.format(o.amount_tax)"/>-->
+<!--                                  </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                              <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Total After Tax</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                  <t t-if="(o.amount_total_after_tax)==0">-->
+<!--                                    <span>-</span>-->
+<!--                                  </t>-->
+<!--                                  <t t-else="">-->
+<!--                                    <span t-esc="'{:.0f}'.format(o.amount_total_after_tax)"/>-->
+<!--                                  </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                             <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Global Discount</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                <t t-if="o.amount_discount_global==0">-->
+<!--                                  <span>-</span>-->
+<!--                                </t>-->
+<!--                                <t t-else="">-->
+<!--                                  <span t-esc="'{:.0f}'.format(o.amount_discount_global)"/>-->
+<!--                                </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+
+<!--                             <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Total</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                  <t t-if="(amount_total)==0">-->
+<!--                                    <span>-</span>-->
+<!--                                  </t>-->
+<!--                                  <t t-else="">-->
+<!--                                    <span t-esc="'{:.0f}'.format(o.amount_total)"/>-->
+<!--                                  </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                <br/><br/><br/><br/><br/>-->
+<!--                <div class="row" style="width:100%;font-size:13px">-->
+<!--                    <div class="col-md-4" style="width:20%;text-align:right"> Term &amp; Condition:</div>-->
+<!--                    <div class="col-md-8" style="width:80%">-->
+<!--                        <t t-if="o.note!=False">-->
+<!--                            <t t-esc="o.note"/>-->
+<!--                        </t>-->
+<!--                        <t t-if="o.note==''">-->
+<!--                        <span>_______________________________________________________________________________________________</span>-->
+<!--                        </t>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--                </div>-->
+<!--            <div class="footer" style="font-size:14px;">-->
+<!--            <div class="row" style="margin-bottom:20px">-->
+<!--                <div class="col-xs-4" style="width:33%">Paid By: _______________</div>-->
+<!--                <div class="col-xs-4" style="width:33%">Received By: _______________</div>-->
+<!--                <div class="col-xs-4" style="width:33%;text-align:right">Approved By: _______________</div>-->
+<!--            </div>-->
+<!--            <div style="padding: 10px;margin-top:33px;border: 1px solid black;font-size:13px;">-->
+<!--                <strong>Remarks:</strong> Please examine condition and quantity of the goods . Goods sold are not returnable or exchangeable.-->
+<!--                Please bring up your warranty card and invoce voucher when you exchange damage goods.-->
+<!--            </div>-->
+<!--            <div style="width:100%;text-align:center;font-size:13px;margin-top:3px">-->
+<!--                <div><strong>Show Room</strong> -No.AU-17, Baukhtaw Station Street , Yankin Township ,Yangon , Myanmar.</div>-->
+<!--                <div>TEL : +95 93324 6666                           Hot Line   :  9 774 822 822 , 9 775 822 822</div>-->
+<!--                <div>Email  : sale@lipermyanmar.com       Web   :  www.lipermyanmar.com</div>-->
+<!--            </div>-->
+<!--            <div class="row" style="width:100%;margin-top:-3px;">-->
+<!--                <div class="text-muted" style="width:50%;text-align:left">-->
+<!--                    Printed Date/Time:-->
+<!--                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %I:%M:%S %p')"/>-->
+<!--                </div>-->
+<!--                <div class="text-muted" style="width:50%">-->
+<!--                    <div t-if="report_type == 'pdf'" style="text-align:right">-->
+<!--                        Page: <span class="page"/> / <span class="topage"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        </t>-->
+<!--    </template>-->
+
+<!--    <template id="report_sale_order_document_custom_sub_template_with_description">-->
+<!--        <div class="header" inherit_id="report_form.external_layout_standard_header">-->
+<!--            <div class="row" style="width:100%;padding-top:5px;font-size:14px;font-family:zawgyione;">-->
+<!--                    <div style="width:40%">-->
+<!--                        <div name="invoice" style="width:100%;padding-top:60px;"></div>-->
+<!--                    </div>-->
+<!--                    <div style="width:40%;"></div>-->
+<!--                    <div class="col-3 mb4">-->
+<!--                        <img t-if="o.branch_id.logo" t-att-src="image_data_uri(o.branch_id.logo)" class="float-right" style="max-height: 140px;width:320px;" alt="Logo"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--        </div>-->
+<!--        <t t-call="web.external_layout">-->
+<!--            <t t-set="o" t-value="o.with_context(lang=lang)" />-->
+<!--            <div class="page" style="font-size:14px;font-family:zawgyione;">-->
+<!--                 &lt;!&ndash;  ZNL 1-9-2020 THIS h2  is new added and insert style="font-weight:bold REMOVE IN THE DIV OF <br/>"&ndash;&gt;-->
+<!--                <h2>-->
+<!--                    <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">-->
+<!--                        <span t-if="o.state not in ['draft','sent']" style="font-weight:bold">Order</span>-->
+<!--                        <span t-if="o.state in ['draft','sent']" style="font-weight:bold">Quotation</span>-->
+<!--                    </t>-->
+<!--                </h2>-->
+<!--                <br/>-->
+<!--                <div class="row" style="width:100%">-->
+<!--                    <div class="col-md-8" style="width:60%">-->
+<!--                        <div class="row" style="width:100%">-->
+<!--                                <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Attention To</span>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-esc="o.contact_id"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Customer Name</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right;">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.partner_id.name"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Contact Name</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right;">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.contact_id"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                <span>Contact Phone</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.contact_phone"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                <span>Accept Person</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                 <t t-esc="o.accept_person"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                            <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                <span>Delivery Address</span>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                            <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                              <span t-field='o.contact_address'/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="row" style="width:100%">-->
+<!--                                <div class="col-md-6" style="width:39%;font-weight:bold">-->
+<!--                                    <span>Delivery Date</span>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                <div class="col-md-5" style="width:60%;text-align:left;margin-left:-20px">-->
+<!--                                   <t t-if="o.delivery_date">-->
+<!--                                       <t t-esc="o.delivery_date.strftime('%d-%m-%Y')"/>-->
+<!--                                   </t>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4" style="width:40%">-->
+<!--                        <div class="row" style="width:100$">-->
+<!--                            <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                <span>Date</span>-->
+<!--                               </div>-->
+<!--                               <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                               <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-if="o.date_order">-->
+<!--                                        <t t-esc="o.date_order.strftime('%d-%m-%Y')"/>-->
+<!--                                    </t>-->
+<!--                               </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="row" style="width:100$">-->
+<!--                               <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                   <span>Sale Order No</span>-->
+<!--                               </div>-->
+<!--                               <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                               <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-esc="o.name"/>-->
+<!--                               </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="row" style="width:100$">-->
+<!--                               <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                   <span>Sale By</span>-->
+<!--                               </div>-->
+<!--                               <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                               <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                    <t t-esc="o.sale_by.name"/>-->
+<!--                               </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="row" style="width:100$">-->
+<!--                                   <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                       <span>Reference</span>-->
+<!--                                   </div>-->
+<!--                                   <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                   <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--&lt;!&ndash;                                        <t t-esc="o.sale_reference"/>&ndash;&gt;-->
+<!--                                   </div>-->
+<!--                                </div>-->
+<!--&lt;!&ndash;                          ZNL 1-9-2020 THIS PriceList DIV is new added&ndash;&gt;-->
+<!--                           <div class="row" style="width:100$">-->
+<!--                                   <div class="col-md-6" style="width:40%;font-weight:bold">-->
+<!--                                       <span>Pricelist</span>-->
+<!--                                   </div>-->
+<!--                                   <div class="col-md-1" style="width:1%;text-align:right">:</div>-->
+<!--                                   <div class="col-md-5" style="width:59%;text-align:left;margin-left:-20px">-->
+<!--                                        <t t-esc="o.pricelist_id.name"/> (<t t-esc="o.currency_id.name"/>)-->
+<!--                                   </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                    </div>-->
+<!--                    <table class="table table-sm o_main_table" name="invoice_line_table" style="margin-top:10px">-->
+<!--                        <thead>-->
+<!--                             <tr style="border-top: 1px solid black;border-bottom: 1px solid black ;">-->
+<!--                                <t t-set="colspan" t-value="5"/>-->
+<!--                                <th class="text" style="width:5%;color:black;border:1px solid black;vertical-align:middle;text-align:center">No.</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Image</th>-->
+<!--                                <th class="text" style="width:18%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Item Code</th>-->
+<!--                                <th class="text" style="width:24%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Description</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Unit Price</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Dis %</th>-->
+<!--                                <th class="text" style="width:10%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Qty</th>-->
+<!--                                <th class="text" style="width:18%;color:black;border:1px solid black;vertical-align:middle;text-align:center">Amount</th>-->
+<!--                             </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody class="invoice_tbody">-->
+<!--                            <t t-set="current_subtotal" t-value="0"/>-->
+<!--                            <t t-set="no" t-value="0"/>-->
+<!--                             <tr t-foreach="o.order_line" t-as="move" style="border:1px solid black;">-->
+<!--                                 <t t-set="no" t-value="no+1"/>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black">-->
+<!--                                        <span t-esc="no"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+
+<!--                                    </td>-->
+<!--                                    <td style="text-align:left;color:black;border:1px solid black">-->
+<!--                                        <span t-field="move.product_id.default_code"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:left;color:black;border:1px solid black">-->
+<!--                                        <t t-if="move.product_id.name">-->
+<!--                                          <span t-field="move.product_id.name"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <t t-if="move.price_unit==0">-->
+<!--                                          <span>-</span>-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                          <span t-esc="'{:.0f}'.format(move.price_unit)"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <t t-if="move.discount_amount==0">-->
+<!--                                          <span>-</span>-->
+<!--                                        </t>-->
+<!--                                        <t t-else="">-->
+<!--                                          <span t-esc="'{:.0f}'.format(move.discount_amount)"/>-->
+<!--                                          <t t-if="move.discount_type=='percentage'">-->
+<!--                                              <span> %</span>-->
+<!--                                          </t>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:center;color:black;border:1px solid black;vertical-align:middle">-->
+<!--                                        <t t-if="move.product_id.type == 'service'">-->
+<!--                                            <span>-</span>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="move.product_id.type != 'service'">-->
+<!--                                          <t t-if="move.product_uom_qty==0">-->
+<!--                                            <span>-</span>-->
+<!--                                          </t>-->
+<!--                                          <t t-else="">-->
+<!--                                            <span t-esc="'{:.0f}'.format(move.product_uom_qty)"/>-->
+<!--                                          </t>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:right;color:black;border:1px solid black">-->
+<!--                                      <t t-if="move.total_amt==0">-->
+<!--                                        <span>-</span>-->
+<!--                                      </t>-->
+<!--                                      <t t-else="">-->
+<!--                                        <span t-esc="'{:.0f}'.format(move.total_amt)"/>-->
+<!--                                      </t>-->
+<!--                                    </td>-->
+<!--                             </tr>-->
+<!--                             <tr style="border-top: 1px solid black;">-->
+<!--                                <t t-set="colspan" t-value="5"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="border:none"/>-->
+<!--                                <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Total</th>-->
+<!--                                <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:center;vertical-align:middle">-->
+
+<!--                                </th>-->
+<!--                                <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+
+<!--                                </th>-->
+<!--                             </tr>-->
+<!--                             <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">After Line Discount</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                             <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Tax</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                 <t t-if="o.amount_tax==0">-->
+<!--                                    <span>-</span>-->
+<!--                                  </t>-->
+<!--                                  <t t-else="">-->
+<!--                                    <span t-esc="'{:.0f}'.format(o.amount_tax)"/>-->
+<!--                                  </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                             <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Total After Tax</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                            <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Global Discount</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+
+<!--                               </th>-->
+<!--                            </tr>-->
+
+
+
+<!--                            <tr style="border-top: 1px solid black;">-->
+<!--                               <t t-set="colspan" t-value="6"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th class="text" style="border:none"/>-->
+<!--                               <th t-att-colspan="2" class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:left">Total</th>-->
+<!--                               <th class="text" style="color:black;border:1px solid black;vertical-align:middle;text-align:right">-->
+<!--                                 <t t-if="(o.amount_total)==0">-->
+<!--                                    <span>-</span>-->
+<!--                                  </t>-->
+<!--                                  <t t-else="">-->
+<!--                                    <span t-esc="'{:.0f}'.format(o.amount_total)"/>-->
+<!--                                  </t>-->
+<!--                               </th>-->
+<!--                            </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                 <br/><br/><br/><br/><br/>-->
+<!--                <div class="row" style="width:100%;font-size:13px">-->
+<!--                    <div class="col-md-4" style="width:20%;text-align:right"> Term &amp; Condition:</div>-->
+<!--                    <div class="col-md-8" style="width:80%">-->
+<!--                        <t t-if="o.note!=False">-->
+<!--                            <t t-esc="o.note"/>-->
+<!--                        </t>-->
+<!--                        <t t-if="o.note==''">-->
+<!--                        <span>_______________________________________________________________________________________________</span>-->
+<!--                        </t>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--                </div>-->
+<!--            <div class="footer" style="font-size:14px;">-->
+<!--            <div class="row" style="margin-bottom:20px">-->
+<!--                <div class="col-xs-4" style="width:33%">Paid By: _______________</div>-->
+<!--                <div class="col-xs-4" style="width:33%">Received By: _______________</div>-->
+<!--                <div class="col-xs-4" style="width:33%;text-align:right">Approved By: _______________</div>-->
+<!--            </div>-->
+<!--            <div style="padding: 10px;margin-top:33px;border: 1px solid black;font-size:13px;">-->
+<!--                <strong>Remarks:</strong> Please examine condition and quantity of the goods . Goods sold are not returnable or exchangeable.-->
+<!--                Please bring up your warranty card and invoce voucher when you exchange damage goods.-->
+<!--            </div>-->
+<!--            <div style="width:100%;text-align:center;font-size:13px;margin-top:3px">-->
+<!--                <div><strong>Show Room</strong> -No.AU-17, Baukhtaw Station Street , Yankin Township ,Yangon , Myanmar.</div>-->
+<!--                <div>TEL : +95 93324 6666                           Hot Line   :  9 774 822 822 , 9 775 822 822</div>-->
+<!--                <div>Email  : sale@lipermyanmar.com       Web   :  www.lipermyanmar.com</div>-->
+<!--            </div>-->
+<!--            <div class="row" style="width:100%;margin-top:-3px;">-->
+<!--                <div class="text-muted" style="width:50%;text-align:left">-->
+<!--                    Printed Date/Time:-->
+<!--                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %I:%M:%S %p')"/>-->
+<!--                </div>-->
+<!--                <div class="text-muted" style="width:50%">-->
+<!--                    <div t-if="report_type == 'pdf'" style="text-align:right">-->
+<!--                        Page: <span class="page"/> / <span class="topage"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        </t>-->
+<!--    </template>-->
+
+<!--    <template id="report_sale_order_document_custom_template">-->
+<!--        <t t-call="web.html_container">-->
+<!--            <t t-foreach="docs" t-as="o">-->
+<!--                <t t-set="lang" t-value="o.partner_id.lang"/>-->
+<!--                <t t-call="sale_extend.report_sale_order_document_custom_sub_template" t-lang="lang"/>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+
+<!--    <template id="report_sale_order_document_custom_template_with_description">-->
+<!--        <t t-call="web.html_container">-->
+<!--            <t t-foreach="docs" t-as="o">-->
+<!--                <t t-set="lang" t-value="o.partner_id.lang"/>-->
+<!--                <t t-call="sale_extend.report_sale_order_document_custom_sub_template_with_description" t-lang="lang"/>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+
+<!--    <report id="report_sale_order_document_custom_with_description"-->
+<!--            string="Quotation/ Order"-->
+<!--            model="sale.order"-->
+<!--            report_type="qweb-pdf"-->
+<!--            file="sale_extend.report_sale_order_document_custom_template_with_description"-->
+<!--            name="sale_extend.report_sale_order_document_custom_template_with_description"-->
+<!--            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"-->
+<!--            menu='True'-->
+<!--        />-->
+
+<!--    <report id="report_sale_order_document_custom"-->
+<!--            string="Quotation/ Order Without Description"-->
+<!--            model="sale.order"-->
+<!--            report_type="qweb-pdf"-->
+<!--            file="sale_extend.report_sale_order_document_custom_template"-->
+<!--            name="sale_extend.report_sale_order_document_custom_template"-->
+<!--            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"-->
+<!--            menu='True'-->
+<!--        />-->
+
+    <report id="sale.action_report_saleorder"
+            string="Quotation / Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="sale.report_saleorder"
+            name="sale.report_saleorder"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+
+    />
+
+</odoo>

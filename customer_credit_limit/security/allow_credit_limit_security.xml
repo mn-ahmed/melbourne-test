@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_allow_credit_limit" model="res.groups">
+        <field name="name">Allow Credit Limit Amount Over</field>
+    </record>
+</odoo>

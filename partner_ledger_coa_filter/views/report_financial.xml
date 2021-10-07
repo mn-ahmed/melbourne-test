@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="filter_info_template_inherit_coa" inherit_id="account_reports.filter_info_template">
+        <xpath expr="//div/div[2]/div[4]" position="after">
+            <div class="col-12">
+                <t t-if="options.get('coa_account')">
+                    COA:
+                    <t t-set="coa_account_value" t-value="'All'"/>
+                    <t t-foreach="options['selected_coa_account_ids']" t-as="coa_name">
+                        <t t-set="coa_account_value" t-value="''"/>
+                        <t t-esc="coa_name"/>
+                    </t>
+                    <t t-esc="coa_account_value"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consignment_transfer_user,User Access for Consignment Transfer,model_consignment_transfer,base.group_user,1,1,1,1
+access_consignment_return_user,User Access for Consignment Return,model_consignment_return,base.group_user,1,1,1,1
+access_consignment_transfer_line_user,User Access for Consignment Transfer Line,model_consignment_transfer_line,base.group_user,1,1,1,1
+access_consignment_transfer_wizard_user,User Access for Consignment Transfer Wizard,model_consignment_transfer_wizard,base.group_user,1,1,1,1
+access_consignment_stock_report_user,User Access for Consignment Stock Report,model_consignment_stock_report,base.group_user,1,1,1,1
+access_consignment_report_user,User Access for Consignment Report,model_consignment_report,base.group_user,1,1,1,1

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="search_template_branch">
+        <a type="button" class="dropdown-toggle account_branch_filter" data-toggle="dropdown">
+            <span class="fa fa-folder-open"/> Branch
+            <span class="caret"/>
+        </a>
+        <ul class="dropdown-menu o_filters_menu" role="menu">
+            <li style='margin-left: 10px; margin-right: 10px;'>
+                <b>Branch</b><br />
+                <select class="js_branch_auto_complete" data-filter="branch_ids" multiple="multiple" style="min-width: 100px;">
+                    <t t-foreach="branch_ids" t-as="a">
+                        <option t-att-value="a[0]"><t t-esc="a[1]" /></option>
+                    </t>
+                </select>
+            </li>
+        </ul>
+    </template>
+
+    <template id="branch_search_template" inherit_id="account_reports.search_template">
+        <xpath expr="//div" position="after">
+            <div class="btn-group o_dropdown o_account_reports_filter_branch" t-if="options.get('branch')">
+                <t t-call="multi_branches_reports_ent.search_template_branch"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

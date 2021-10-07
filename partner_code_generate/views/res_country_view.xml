@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_country_state_tree_seq" model="ir.ui.view">
+            <field name="name">res.country.state.seq</field>
+            <field name="model">res.country.state</field>
+            <field name="inherit_id" ref="base.view_country_state_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='code']" position="after">
+                    <field name="sequence_number_next"/>
+                    <field name="sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

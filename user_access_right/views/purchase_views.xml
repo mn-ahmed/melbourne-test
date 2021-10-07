@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_bill" model="ir.ui.view">
+            <field name="name">purchase.order.form.bill</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_create_bill')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_view_invoice" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="purchase_order_form_lock" model="ir.ui.view">
+            <field name="name">purchase.order.form.lock</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_purchase_lock') ])]"/>
+            <field name="arch" type="xml">
+                <button name="button_done" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="purchase_order_form_unlock" model="ir.ui.view">
+            <field name="name">purchase.order.form.unlock</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_unlock_manager')])]"/>
+            <field name="arch" type="xml">
+                <button name="button_unlock" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_cancel" model="ir.ui.view">
+            <field name="name">purchase.order.form.cancel</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_purchase_cancel')])]"/>
+            <field name="arch" type="xml">
+                <button name="button_cancel" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+         <record id="purchase_order_form_draft" model="ir.ui.view">
+            <field name="name">purchase.order.form.draft</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_purchase_draft')])]"/>
+            <field name="arch" type="xml">
+                <button name="button_draft" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+
+    </data>
+</odoo>

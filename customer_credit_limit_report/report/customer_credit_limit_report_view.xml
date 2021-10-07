@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_credit_limit_report_tree" model="ir.ui.view">
+        <field name="name">credit.limit.report.tree</field>
+        <field name="model">credit.limit.report</field>
+        <field name="arch" type="xml">
+            <tree string="Credit Limit Report" create="false">
+                <field name="partner_id" optional="show"/>
+                <field name="credit_limit_amount" optional="show"/>
+                <field name="payment_term_id" optional="show"/>
+                <field name="invoice_date" optional="show"/>
+                <field name="due_date" optional="show"/>
+                <field name="invoice_number" optional="show"/>
+                <field name="invoice_amount" optional="show"/>
+                <field name="amount_due" optional="show"/>
+                <field name="invoice_payment_state" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_credit_limit_report_pivot" model="ir.ui.view">
+        <field name="name">credit.limit.report.search</field>
+        <field name="model">credit.limit.report</field>
+        <field name="arch" type="xml">
+            <pivot string="credit limit report">
+                <field name="partner_id"/>
+                <field name="credit_limit_amount"/>
+                <field name="payment_term_id"/>
+                <field name="invoice_date"/>
+                <field name="due_date"/>
+                <field name="invoice_number"/>
+                <field name="invoice_amount"/>
+                <field name="amount_due"/>
+                <field name="invoice_payment_state"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_credit_limit_report_search" model="ir.ui.view">
+        <field name="name">credit.limit.report.search</field>
+        <field name="model">credit.limit.report</field>
+        <field name="arch" type="xml">
+            <search string="credit limit report">
+                <field name="partner_id"/>
+                <field name="credit_limit_amount"/>
+                <field name="payment_term_id"/>
+                <separator/>
+                <field name="invoice_date"/>
+                <field name="due_date"/>
+                <separator/>
+                <field name="invoice_number"/>
+                <field name="invoice_amount"/>
+                <field name="invoice_payment_state"/>
+                <group expand="1" string="Group By">
+                    <filter string="Customer Name" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Credit Limit Amount" name="credit_limit_amount" context="{'group_by':'credit_limit_amount'}"/>
+                    <filter string="Payment Term" name="payment_term_id" context="{'group_by':'payment_term_id'}"/>
+                    <filter string="Invoice Date" name="invoice_date" context="{'group_by':'invoice_date'}"/>
+                    <filter string="Due Date" name="due_date" context="{'group_by':'due_date'}"/>
+                    <filter string="Invoice No" name="invoice_number" context="{'group_by':'invoice_number'}"/>
+                    <filter string="Payment Status" name="by_invoice_payment_state" context="{'group_by':'invoice_payment_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_credit_report_report" model="ir.actions.act_window">
+        <field name="name">Customer Credit Limit Report</field>
+        <field name="res_model">credit.limit.report</field>
+        <field name="view_mode">tree,pivot</field>
+        <!-- <field name="context">{'group_by': 'partner_id'}</field> -->
+        <field name="search_view_id" ref="view_credit_limit_report_search"/>
+    </record>
+
+    <menuitem id="menu_credit_limit_report_report"
+              name="Customer Credit Limit Report"
+              action="action_credit_report_report"
+              sequence="30"
+              parent="account_reports.account_reports_partners_reports_menu"/>
+    <menuitem id="menu_credit_limit_report_report_sale"
+              name="Customer Credit Limit Report"
+              action="action_credit_report_report"
+              sequence="30"
+              parent="sale.menu_sale_report"/>
+
+</odoo>

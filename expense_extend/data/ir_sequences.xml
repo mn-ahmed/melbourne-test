@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="hr_expense_sheet_sequence" model="ir.sequence">
+            <field name="name">Expense Sheet Sequence</field>
+            <field name="implementation">no_gap</field>
+            <field name="code">hr.expense.sheet</field>
+            <field name="prefix">EXP</field>
+            <field name="padding">4</field>
+            <field name="number_next_actual" eval="1"/>
+            <field name="number_increment" eval="1"/>
+            <field name="active" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

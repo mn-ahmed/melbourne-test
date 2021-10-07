@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+
+        <record id="global_discount_invoice_view_form" model="ir.ui.view">
+            <field name="name">global.discount.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[1]/group"
+                    position="after">
+                    <div class="container">
+                        <field name="apply_discount" invisible="1" />
+                        <field name="amount_global_discount"
+                            invisible="1" />
+                        <label for="discount_type" string="Global Discount Type:"
+                            attrs="{'invisible':[('apply_discount','!=',True),('amount_global_discount','=',0)]}" />
+                        <field name="discount_type" class="oe_inline"
+                            attrs="{'invisible':[('apply_discount','!=',True),('amount_global_discount','=',0)],'readonly':['|',('apply_discount','!=',True),('state', 'in', ['posted', 'cancel'])]}" />
+                    </div>
+                    <div class="container">
+                        <label for="discount_rate" string="Global Discount"
+                            attrs="{'invisible':[('apply_discount','!=',True),('amount_global_discount','=',0)]}" />
+                        <field name="discount_rate" class="oe_inline"
+                            attrs="{'invisible':[('apply_discount','!=',True),('amount_global_discount','=',0)],'readonly':['|','|',('apply_discount','!=',True),('state', 'in', ['posted', 'cancel']), ('discount_type', 'in', [None, False])]}" />
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='amount_by_group']"
+                    position="after">
+                    <field name="amount_global_discount"
+                        attrs="{'invisible':[('apply_discount','!=',True),('amount_global_discount','=',0)]}" />
+                </xpath>
+                <xpath
+                    expr="//field[@name='invoice_line_ids']//field[@name='discount']"
+                    position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath
+                    expr="//field[@name='line_ids']//field[@name='discount']"
+                    position="before">
+                    <field name="discount_amount" invisible="1" />
+                    <field name="discount_type" invisible="1" />
+                </xpath>
+                <xpath
+                    expr="//field[@name='invoice_line_ids']//field[@name='discount']"
+                    position="before">
+                    <field name="discount_type" />
+                    <field name="discount_amount" />
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']"
+                    position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_by_group']"
+                    position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='amount_untaxed']"
+                    position="after">
+                    <field name="amount_untaxed" widget='monetary'
+                        options="{'currency_field': 'currency_id'}" readonly="1" force_save='1'/>
+                    <!-- ......THA -->
+                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                        <label for="total_discount_amount" />
+                    </div>
+                    <field name="total_discount_amount" widget='monetary' nolabel='1'
+                        options="{'currency_field': 'currency_id'}" readonly='1' force_save='1'/>
+                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                        <!-- <label for="amount_total_line_disc" /> -->
+                    </div>
+                    <field name="amount_total_line_disc" widget='monetary'
+                        options="{'currency_field': 'currency_id'}" />
+                    <field name="amount_tax" widget="monetary"
+                        options="{'currency_field': 'currency_id'}" />
+                    <field name="amount_total_after_tax" widget='monetary'
+                        options="{'currency_field': 'currency_id'}" />
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

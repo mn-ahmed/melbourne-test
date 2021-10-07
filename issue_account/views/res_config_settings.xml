@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']" position="inside">
+                <h2>Issue Account</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_sample"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_sample"/>
+                            <div class="text-muted">
+                                Show Sample Issue Account
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('is_sample','=',False)]}">
+                                <div class="row mt16">
+                                    <label for="sample_account_id" class="col-lg-4 o_light_label"/>
+                                    <field name="sample_account_id" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_damage"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_damage"/>
+                            <div class="text-muted">
+                                Show Damage Issue Account
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('is_damage','=',False)]}">
+                                <div class="row mt16">
+                                    <label for="damage_account_id" class="col-lg-4 o_light_label"/>
+                                    <field name="damage_account_id" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

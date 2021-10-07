@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="consignment_location" model="stock.location">
+            <field name="name">CON</field>
+            <field name="location_id" ref="stock.stock_location_locations"/>
+            <field name="usage">view</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="branch_id" model="consignment.transfer" eval="obj().get_default_branch()"/>
+        </record>
+        <record id="consignment_warehouse" model="stock.warehouse">
+            <field name="name">Consignment</field>
+            <field name="code">CON</field>
+            <field name="is_consignment_warehouse" eval="True"/>
+            <field name="company_id" ref="base.main_partner"/>
+            <field name="branch_id" model="consignment.transfer" eval="obj().get_default_branch()"/>
+        </record>
+    </data>
+</odoo>

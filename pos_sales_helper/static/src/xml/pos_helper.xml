@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="HelperSelect">
+        <div class="modal-dialog">
+            <div class="popup">
+                <p class="title">
+                    Select Helper
+                </p>
+                <div class="body" style="margin:0;">
+                    <div class="clientlist-screen screen" style="margin-bottom:60px">
+                        <div class="screen-content">
+                            <section class="full-content">
+                                <div class='window'>
+                                    <section class='subwindow'>
+                                        <div class='subwindow-container'>
+                                            <div>
+                                                <input class="myfilterhelper" type="text" id="helperInput" placeholder="Search by names..."/>
+                                                <input type="hidden" id="helper_id"/>
+                                            </div>
+                                            <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                                <table class="client-list table" id="myTablehelper">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:left">Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="client-list-contents">
+                                                        <t t-foreach="widget.pos.helpers" t-as="helper">
+                                                            <tr class="line-index client-line" t-att-id="helper.id" t-att-value="helper.name">     
+                                                                <td style="text-align:left">
+                                                                    <t t-esc="helper.name"/>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Ok
+                    </div>
+                    <div class="button cancel">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="HelperButton">
+        <div class='control-button'>
+            <i class='fa fa-tag'/> Helper
+        </div>
+    </t>
+</templates>

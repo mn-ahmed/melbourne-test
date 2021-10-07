@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_discount" model="ir.ui.view">
+        <field name="name">sale.order.form.discount</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree//field[@name='discount']"
+                position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='tax_id']"
+                position="before">
+                <field name="discount_type" />
+                <field name="discount_amount"/>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_tax']"
+                position="replace">
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']"
+                position="after">
+                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                    <label for="total_discount_amount" />
+                </div>
+                <field name="total_discount_amount" nolabel="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                    
+                </div>
+                <field name="amount_total_line_disc" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_total_after_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_discount_global" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+            <xpath expr="//field[@name='note']"
+                position="before">
+                <field name="discount_type" />
+                <field name="discount_rate"/>
+            </xpath>
+        </field>
+    </record>
+    
+    
+</odoo>
+

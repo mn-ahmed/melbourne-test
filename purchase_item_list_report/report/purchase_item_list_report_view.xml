@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_purchase_item_list_tree" model="ir.ui.view">
+        <field name="name">purchase.item.list.tree</field>
+        <field name="model">purchase.item.list</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Item List" create="false">
+                <field name="vendor_code" optional="show"/>
+                <field name="vendor_name" optional="show"/>
+                <field name="contact_name" optional="show"/>
+                <field name="date_order" optional="show"/>
+                <field name="o_reference" optional="show"/>
+                <field name="branch_id" optional="show"/>
+                <field name="delivery_no" optional="show"/>
+                <field name="vendor_bill" optional="show"/>
+                <field name="bill_date" optional="show"/>
+                <field name="default_code" optional="show"/>
+                <field name="product_name" optional="show"/>
+                <field name="order_qty" optional="show"/>
+                <field name="received_qty" optional="show"/>
+                <field name="billed_qty" optional="show"/>
+                <field name="uom" optional="show"/>
+                <field name="unit_price" optional="show"/>
+                <field name="p_amt_usd"   optional="show" />
+                <field name="p_amt_cny"  optional="show" />
+
+                <field name="p_amt_mmk"  optional="show" />
+                <field name="p_amt_euro"  optional="show" />
+                <field name="billed_amt_usd" optional="show"/>
+                <field name="billed_amt_cny" optional="show"/>
+                <field name="billed_amt_mmk"   optional="show"/>
+                <field name="billed_amt_euro" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_purchase_item_list_pivot" model="ir.ui.view">
+        <field name="name">purchase.item.list.search</field>
+        <field name="model">purchase.item.list</field>
+        <field name="arch" type="xml">
+            <pivot string="Purchase Item List">
+                <field name="vendor_code"/>
+                <field name="vendor_name"/>
+                <field name="contact_name"/>
+                <field name="date_order"/>
+                <field name="o_reference"/>
+                <field name="delivery_no"/>
+                <field name="vendor_bill"/>
+                <field name="bill_date"/>
+                <field name="branch_id"/>
+                <field name="default_code"/>
+                <field name="product_name"/>
+                <field name="order_qty"/>
+                <field name="received_qty"/>
+                <field name="billed_qty"/>
+                <field name="uom"/>
+                <field name="unit_price"/>
+                <field name="p_amt_usd"/>
+                <field name="p_amt_cny"/>
+                <field name="p_amt_mmk" />
+                <field name="p_amt_euro"/>
+                <field name="billed_amt_usd"/>
+                <field name="billed_amt_cny"/>
+                <field name="billed_amt_mmk"/>
+                <field name="billed_amt_euro"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_purchase_item_list_search" model="ir.ui.view">
+        <field name="name">purchase.item.list.search</field>
+        <field name="model">purchase.item.list</field>
+        <field name="arch" type="xml">
+            <search string="Purchase Item List">
+                <field name="vendor_code" optional="show"/>
+                <field name="vendor_name" optional="show"/>
+                <field name="contact_name" optional="show"/>
+                <separator/>
+                <field name="date_order" optional="show"/>
+                <field name="o_reference" optional="show"/>
+                <field name="delivery_no" optional="show"/>
+                <field name="vendor_bill" optional="show"/>
+                <field name="bill_date" optional="show"/>
+                <field name="default_code" optional="show"/>
+                <field name="product_name" optional="show"/>
+                <separator/>
+                <field name="order_qty" optional="show"/>
+                <field name="received_qty" optional="show"/>
+                <field name="billed_qty" optional="show"/>
+                <separator/>
+                <field name="uom" optional="show"/>
+                <field name="unit_price" optional="show"/>
+                <group expand="1" string="Group By">
+                    <filter string="Vendor Code" name="vendor_code" context="{'group_by':'vendor_code'}"/>
+                    <filter string="Name" name="vendor_name" context="{'group_by':'vendor_name'}"/>
+                    <filter string="Contact" name="contact_name" context="{'group_by':'contact_name'}"/>
+                    <filter string="Order Date" name="date_order" context="{'group_by':'date_order'}"/>
+                    <filter string="Order Reference" name="o_reference" context="{'group_by':'o_reference'}"/>
+                    <filter string="Delivery No" name="delivery_no" context="{'group_by':'delivery_no'}"/>
+                    <filter string="Vendor Bill No" name="vendor_bill" context="{'group_by':'vendor_bill'}"/>
+                    <filter string="Branch" name="branch_id" context="{'group_by':'branch_id'}"/>
+                    <filter string="Item Code" name="default_code" context="{'group_by':'default_code'}"/>
+                    <filter string="Item" name="product_name" context="{'group_by':'product_name'}"/>
+                    <filter string="Order Qty" name="order_qty" context="{'group_by':'order_qty'}"/>
+                    <filter string="Received Qty" name="received_qty" context="{'group_by':'received_qty'}"/>
+                    <filter string="Billed Qty" name="billed_qty" context="{'group_by':'billed_qty'}"/>
+                    <filter string="Unit of Measure" name="uom" context="{'group_by':'uom'}"/>
+                    <filter string="Unit Price" name="unit_price" context="{'group_by':'unit_price'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_purchase_list_list" model="ir.actions.act_window">
+        <field name="name">purchase item list</field>
+        <field name="res_model">purchase.item.list</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="search_view_id" ref="view_purchase_item_list_search"/>
+    </record>
+
+   <menuitem id="menu_purchase_item_list_report"
+              name="Purchase Item List Report"
+              action="action_purchase_list_list"
+              sequence="10"
+              parent="purchase.purchase_report"/>
+
+</odoo>

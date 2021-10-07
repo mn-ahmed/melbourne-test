@@ -1,0 +1,54 @@
+<odoo>
+  <data>    
+    <record id="view_picking_form_sample" model="ir.ui.view">
+      <field name="name">stock.picking.form.sample</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//div[hasclass('o_td_label')]" position="before">
+          <field name="mr_no" attrs="{'invisible': [('transfer_type', '=', 'normal')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='scheduled_date']" position="after">
+          <field name="sample_give_date" attrs="{'invisible': [('transfer_type', '!=', ('sample'))]}"/>
+          <field name="return_date" attrs="{'invisible': [('transfer_type', 'not in', ['sample_return','damage_return'])]}"/>
+        </xpath>
+        <xpath expr="//field[@name='location_dest_id']" position="after">
+          <field name="team_id" widget="selection" attrs="{'invisible': ['|',('transfer_type', '=', 'normal'),('picking_type_code', '=', 'incoming')]}"/>
+          <field name="sale_person" attrs="{'invisible': ['|',('transfer_type', '=', 'normal'),('picking_type_code', '=', 'incoming')]}"/>
+          <field name="sale_by" attrs="{'invisible': ['|',('transfer_type', '=', 'normal'),('picking_type_code', '=', 'incoming')]}" options='{"no_open": True,"no_create":True}'/>
+          <field name="transfer_type" readonly="0" invisible="1"/>
+        </xpath>
+        <xpath expr="//header" position="inside">
+            <button name="%(action_report_sample_give_product)d" string="Print Sample Issue" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('sample'))]}"/>
+            <button name="%(action_report_sample_delivery)d" string="Print Sample Delivery" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('sample'))]}"/>
+            <button name="%(action_report_sample_return)d" string="Print Sample Return" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('sample_return'))]}"/>
+        </xpath>
+        <xpath expr="//page[@name='note']" position="attributes">
+          <attribute name='string'>DO Note</attribute>
+        </xpath>
+        <xpath expr="//page[@name='note']" position="after">
+          <page string="Description" name="description" attrs="{'invisible': [('transfer_type', 'not in', ['sample_return','sale_return','damage_receipt'])]}">
+              <field name="description" string="Description" placeholder="Add an internal description that will be printed on the Picking Return Operations sheet"/>
+          </page>
+          <page string="Sample Remark" name="remark" attrs="{'invisible': [('transfer_type', '!=', ('sample'))]}">
+              <field name="sample_remark" string="Remark" placeholder="Add an internal remark that will be printed on the Sale Picking Operations sheet"/>
+          </page>
+        </xpath>
+        <xpath expr="//notebook//page[2]" position="replace"  >
+         <page name="myname"  string='Detailed Operations' attrs="{'invisible': [('transfer_type', 'not in', ('sale','sample','sample_return','damage_delivery','normal'))]}">
+              <field name="move_line_ids_without_package"
+                                   attrs="{'readonly': ['|', '|', ('show_operations', '=', False), ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}"
+                                   context="{'tree_view_ref': 'stock.view_stock_move_line_detailed_operation_tree', 'default_picking_id': id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id}"/>
+                            <field name="package_level_ids_details" context="{'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id}" attrs="{'readonly': [('state', '=', 'done')], 'invisible': ['|', ('picking_type_entire_packs', '=', False), ('show_operations', '=', False)]}" />
+                            <button class="oe_highlight" name="put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('draft', 'done', 'cancel'))]}" groups="stock.group_tracking_lot"/>
+          </page>
+
+        </xpath>
+        <xpath expr="//tree/field[@name='quantity_done']" position="replace">
+           <field name="quantity_done" string="Done" />
+        </xpath>
+      </field>
+    </record>    
+  </data>
+</odoo>

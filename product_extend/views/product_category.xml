@@ -1,0 +1,75 @@
+<odoo>
+  <data>
+     <record id="product_template_only_form_view_inherit" model="ir.ui.view">
+            <field name="name">Brand</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="replace">
+                    <field name="categ_id" string="Brand"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="brand_group_by" model="ir.ui.view">
+            <field name="name">product.template.search.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='categ_id']" position="replace">
+                      <filter string="Brand" name="categ_id" context="{'group_by':'categ_id'}"/>
+                </xpath>
+            </field>
+        </record>
+    <record id="product_category_form_view_inheri" model="ir.ui.view">
+      <field name="name">product.category.form.inherit</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="product.product_category_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position="after">
+          <field name="branch_id" options='{"no_open": True,"no_create":True}' optional='hide'/>
+        </xpath>
+      </field>
+    </record>
+    <record id="product_category_search_view_exten" model="ir.ui.view">
+      <field name="name">product.category.search.extend</field>
+      <field name="model">product.category</field>
+      <field name="inherit_id" ref="product.product_category_search_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position='after'>
+          <field name='branch_id' filter_domain="[('branch_id', 'ilike', self)]"/>
+          <filter string="Branch" name="branch_id" context="{'group_by':'branch_id'}"/>
+        </xpath>
+      </field>
+    </record>
+    <record id="product_category_list_view_inherit" model="ir.ui.view">
+            <field name="name">product.category.list</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+              <xpath expr="//field[@name='display_name']" position="replace">
+                  <field name="display_name" string="Product Brand"/>
+              </xpath>
+            </field>
+        </record>
+
+    <record id="open_view_brand_list" model="ir.actions.server">
+            <field name="name">Product Brand</field>
+            <field name="model_id" ref="product.model_product_category"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.check_access_domain()
+            </field>
+     </record>
+    <menuitem id="account_accountant.menu_product_product_categories"
+        action="open_view_brand_list"
+        parent="account.account_account_menu" sequence="3" name="Brand"/>
+
+    <menuitem
+        action="open_view_brand_list" id="stock.menu_product_category_config_stock" name="Brand"
+        parent="stock.menu_product_in_config_stock" sequence="2"/>
+    <menuitem
+            action="product.product_category_action_form" id="purchase.menu_product_category_config_purchase"
+            parent="purchase.menu_product_in_config_purchase" sequence="1" name="Brand" />
+  </data>
+</odoo>

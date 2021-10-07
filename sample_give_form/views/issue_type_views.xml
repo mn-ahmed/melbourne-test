@@ -1,0 +1,47 @@
+<odoo>
+  <data>
+    <record id="view_issue_type_tree" model="ir.ui.view">
+        <field name="name">issue.type.tree</field>
+        <field name="model">issue.type</field>
+        <field name="arch" type="xml">
+            <tree string="Issue Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_issue_type_form" model="ir.ui.view">
+        <field name="name">issue.type.form</field>
+        <field name="model">issue.type</field>
+        <field name="arch" type="xml">
+            <form string="Issue Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_issue_type_search" model="ir.ui.view">
+        <field name="name">issue.type.search</field>
+        <field name="model">issue.type</field>
+        <field name="arch" type="xml">
+            <search string="Issue Type">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record id="issue_type_action" model="ir.actions.act_window">
+        <field name="name">Issue Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">issue.type</field>
+        <field name="view_id" ref="view_issue_type_tree"/>
+    </record>
+
+     <menuitem id="menu_issue_type"
+               name="Issue Type"
+               action="issue_type_action"
+               parent="sale.menu_sale_config"
+               sequence="20"/>
+  </data>
+</odoo>

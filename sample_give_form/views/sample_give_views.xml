@@ -1,0 +1,178 @@
+<odoo>
+  <data>
+    <record id="sample_give_tree" model="ir.ui.view">
+      <field name="name">sample.give.tree</field>
+      <field name="model">sample.give</field>
+      <field name="priority">2</field>
+      <field name="arch" type="xml">
+        <tree string="Samples Give" multi_edit="1">
+            <field name="name" string="Name" readonly="1"/>
+            <field name="mr_no"/>
+            <field name="partner_id"/>
+            <field name="location_id"/>
+            <field name="sale_person"/>
+            <field name="sample_give_date"/>
+            <field name="return_date"/>
+            <field name="branch_id"/>
+            <field name="delivery_status"/>
+            <field name="state"/>
+        </tree>
+      </field>
+    </record>
+    <record id="view_give_form" model="ir.ui.view">
+      <field name="name">sample.give.form</field>
+      <field name="model">sample.give</field>
+      <field name="arch" type="xml">
+        <form string="Samples give" class="o_sample_give">
+          <header>
+            <button name="action_confirmed" id="action_approved" type="object"
+                string="Confirm" class="btn-primary"
+                attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+            <button name="action_submit" id="action_submit" type="object"
+              string="Submit" class="btn-primary"
+              attrs="{'invisible': [('state', 'not in', ['new'])]}"/>
+            <button name="action_approved" id="action_approved" type="object"
+                string="Approve" class="btn-primary"
+                attrs="{'invisible': [('state', 'not in', ['submit'])]}"/>
+            <button name="action_confirm"
+                    type="object"
+                    string="Sample Confirm"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('state', '!=', 'apporved')]}"/>
+            <button name="action_cancel" id="action_cancel" type="object"
+                string="Cancel"
+                attrs="{'invisible': [('state', 'in', ['new','submit','apporved','cancel'])]}"/>
+            <button name="action_set_to_new" id="action_set_to_new" type="object"
+                string="Set to Draft" class="oe_highlight"
+                attrs="{'invisible': [('state', 'not in', ['cancel'])]}"/>
+            <field name="state" widget="statusbar" statusbar_visible="new,submit,apporved,ordered"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button type="object"
+                  name="action_view_delivery"
+                  class="oe_stat_button"
+                  icon="fa-truck"
+                  attrs="{'invisible': [('delivery_count', '=', 0)]}"
+                  groups="base.group_user">
+                  <field name="delivery_count" widget="statinfo" string="Delivery"/>
+              </button>
+            </div>
+            <div class="oe_title">
+              <h1>
+                  <field name="name"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="mr_no" readonly="0" force_save="1"/>
+                <field name="partner_id"/>
+                <field name="accept_person"/>
+              </group>
+              <group>
+                <field name="sample_give_date"/>
+                <field name="return_date"/>
+                <field name="branch_id" context="{'company_id': company_id}"/>
+                <field name="company_id"  position="attributes"  options="{'no_open':True,'no_create': True}" >
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft', 'sent'])]}</attribute>
+                </field>
+
+                <field name="team_id" widget="selection"/>
+                <field name="sale_person"/>
+                <field name="sale_by" options='{"no_open": True,"no_create":True}'/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Product Lines" name="product_lines">
+                <field
+                    name="product_line"
+                    widget="section_and_note_one2many"
+                    mode="tree,kanban"
+                    attrs="{'readonly': [('state', 'in', ['ordered', 'cancel'])]}"
+                >
+                  <form string="Product Lines">
+                    <group>
+                        <field name="product_id"/>
+                        <field name="product_description"/>
+                        <field name="product_uom_qty" string="Qty"/>
+                        <field name="product_uom"/>
+                        <field name="deliver_qty" readonly="1"/>
+                        <field name="return_qty" readonly="1"/>
+                        <field name="balance_qty" readonly="1"/>
+                    </group>
+                  </form>
+                  <tree string="Product Lines" editable="bottom">
+                    <field name="product_id" required="True"/>
+                    <field name="product_description" optional='show'/>
+                    <field name="picking_type_id" optional="show"/>
+                    <field name="product_uom_qty" string="Request Qty"/>
+                    <field name="deliver_qty" optional='show' readonly="1"/>
+                    <field name="return_qty" optional='show' readonly="1"/>
+                    <field name="balance_qty" optional='show' readonly="1"/>
+                    <field name="product_brand_id" options='{"no_open": True,"no_create":True}' optional='hide'/>
+                    <field name="inventory_quantity" optional='hide'/>
+                    <field name="issued_qty" string="Issue Qty"
+                      attrs="{
+                          'column_invisible': [('parent.state', 'not in', ['delivered'])],
+                          'readonly': 1
+                      }"/>
+                    <field name="product_uom"/>
+                    <field name="remark"/>
+                  </tree>
+                </field>
+              </page>
+              <page string="Remark" name='remark'>
+                <label for='sample_remark'/>
+                <field name="sample_remark"/>
+              </page>
+            </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+    <record id="view_sample_give_filter" model="ir.ui.view">
+      <field name="name">sample.give.list.select</field>
+      <field name="model">sample.give</field>
+      <field name="priority" eval="15"/>
+      <field name="arch" type="xml">
+          <search string="Search Sale Give Record">
+              <field name="mr_no" string="MR NO"/>
+              <field name="name" string="Issue Number"/>
+              <field name="partner_id" operator="child_of"/>
+              <field name="location_id" string="Location"/>
+              <field name="sale_person" string="Sales Person"/>
+              <field name="branch_id" string="Branch" />
+
+              <field name="product_line" string="Product" filter_domain="[('product_line.product_id', 'ilike', self)]"/>
+              <filter string="My Sample Record" domain="[('user_id', '=', uid)]" name="my_sample_give_filter"/>
+              <group expand="0" string="Group By">
+                  <filter string="Salesperson" name="salesperson" domain="[]" context="{'group_by': 'sale_person'}"/>
+                  <filter string="Branch" name="branch" domain="[]" context="{'group_by': 'branch_id'}"/>
+                  <filter name="customer" string="Customer" domain="[]" context="{'group_by': 'partner_id'}"/>
+                  <filter string="Sample Give Date" name="sample_give_date" domain="[]" context="{'group_by': 'sample_give_date'}"/>
+                  <filter string="Return Date" name="return_date" domain="[]" context="{'group_by': 'return_date'}"/>
+              </group>
+         </search>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="sample_give_action_tree">
+      <field name="name">Sample Issues</field>
+      <field name="res_model">sample.give</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="view_sample_give_filter"/>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Sample Issues
+        </p><p>
+          Create A new One
+        </p>
+      </field>
+    </record>
+    <menuitem name="Sample Issues" id="sample_give" parent="sale.sale_order_menu" sequence="10" action="sample_give_action_tree"/> 
+  </data>
+</odoo>

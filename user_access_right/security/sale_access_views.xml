@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_sale">
+            <field name="name">Sale Setting</field>
+            <field name="sequence">200</field>
+        </record>
+        <record id="group_cancel" model="res.groups">
+            <field name="name">Hide Sale Cancel</field>
+            <field name="category_id" ref="user_access_right.module_category_sale"/>
+        </record>
+        <record id="group_create_invoice" model="res.groups">
+            <field name="name">Hide Create Invoice</field>
+            <field name="category_id" ref="user_access_right.module_category_sale"/>
+        </record>
+        <record id="group_draft" model="res.groups">
+            <field name="name">Hide Reset To Draft</field>
+            <field name="category_id" ref="user_access_right.module_category_sale"/>
+        </record>
+
+    </data>
+</odoo>

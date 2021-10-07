@@ -1,0 +1,31 @@
+<odoo>
+      <record id="view_invoice_tree_inherit" model="ir.ui.view">
+      <field name="name">account.move.tree</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_invoice_tree"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='amount_total_signed']" position="after">
+            <field name="total_paid_amount"/>
+            <field name="payment_date"/>
+        </xpath>
+          <xpath expr="//field[@name='amount_total_signed']" position="replace">
+              <field name="amount_total"/>
+          </xpath>
+
+      </field>
+    </record>
+     <record id="view_account_invoice_filter_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.select</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='salesperson']" position="after">
+                    <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="partner_state_id" string="Partner State" context="{'group_by': 'partner_state_id'}"/>
+                    <filter name="partner_township_id" string="Partner Township" context="{'group_by': 'partner_township_id'}"/>
+                    <filter name="partner_city" string="Partner City" context="{'group_by': 'partner_city'}"/>
+
+                </xpath>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sale_report_region" model="ir.ui.view">
+            <field name="name">sale.report.region.form</field>
+            <field name="model">sale.report.region</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	            <form string="Sale Report by Region">
+                        <field name="sale_report_region_printed" invisible="1"/>
+                        <group attrs="{'invisible':[('sale_report_region_printed','=',True)]}">
+                            <group>
+                                <field name="start_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+	                	<group attrs="{'invisible':[('sale_report_region_printed','=',False)]}">
+	                	    <field name="file_name" invisible="1"/>
+	                		<field name="sale_report_region_file" readonly="1" filename="file_name"/>
+	                	</group>
+	                <footer>
+	                <button string='Print Excel' name="action_print_sale_region" type="object" class="btn-primary" attrs="{'invisible':[('sale_report_region_printed','=',True)]}"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+	                </footer>
+	            </form>
+            </field>
+        </record>
+
+        <record id="action_print_sale_report_region" model="ir.actions.act_window">
+            <field name="name">Sale Report(Region)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report.region</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+       <menuitem action="action_print_sale_report_region" id="menu_print_sale_report_region"
+       	sequence="23" parent="sale.menu_sale_report" />
+    </data>
+</odoo>

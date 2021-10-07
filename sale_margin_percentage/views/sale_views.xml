@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_order_tree_sale_margin_percentage">
+            <field name="name">sale.order.tree.sale.margin.percentage</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='order_lines']//tree//field[@name='price_total']" position="after">
+                    <field name="margin_percentage" invisible="0"/>
+                    <field name="gp_margin_markup" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

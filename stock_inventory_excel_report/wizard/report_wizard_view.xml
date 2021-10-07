@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_report_in_out_wizard_form" model="ir.ui.view">
+            <field name="name">Inventory In Out Reports</field>
+            <field name="model">report.in.out.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Inventory">
+                    <group string="Company">
+                        <field name="company_id"  string="Company" widget="selection" />
+                    </group>
+                    <group string="Branch">
+                        <field name="branch_id"  />
+                    </group>
+                    <group string="Warehouses">
+                        <field name="warehouse_ids" widget="many2many_tags" string="Warehouses" options="{'no_open':True, 'no_quick_create':True,'no_create_edit':True}" domain="[('branch_id', '=', branch_id)]"/>
+                    </group>
+
+                    <group string="Location"
+                        attrs="{'invisible': [('warehouse_ids', '=', [(6, False, [])])]}">
+                        <field name="location_id" string="Select Location" options="{'no_open':True, 'no_quick_create':True,'no_create_edit':True}"/>
+                    </group>
+                    <group>
+                        <field name="start_date" />
+                        <field name="end_date" />
+                        <field name="sort_order"/>
+                    </group>
+                    <group attrs="{'invisible': [('sort_order', '=', 'product_brand')]}"
+                        string="Select Products">
+                        <field name="filter_product_ids" nolabel="1" options="{'no_quick_create':True,'no_create_edit':True}">
+                            <tree string="Products">
+                                <field name="name" />
+                                <field name="default_code" />
+<!--                                <field name="attribute_value_ids" />-->
+                                <field name="qty_available" />
+                            </tree>
+                        </field>
+                    </group>
+                    <group attrs="{'invisible': [('sort_order', '=', 'warehouse')]}"
+                        string="Select Product Brand">
+                        <field name="filter_product_categ_ids" nolabel="1" options="{'no_quick_create':True,'no_create_edit':True}">
+                            <tree string="Products">
+                                <field name="name" />
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                    <button name="action_export_excel" string="Export Excel" class="oe_highlight" type="object" context="{'xls_export':1}" colspan="2"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_report_in_out_wizard">
+            <field name="name">Stock In Out Report Excel</field>
+            <field name="res_model">report.in.out.wizard</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_report_in_out_wizard_form" />
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_report_in_out_wizard"
+            string="Stock In Out Report Excel" 
+            id="menu_report_in_out_wizard"
+            parent="stock.menu_warehouse_report" sequence="1" />
+            
+        <report
+            id="inventory_io_report_xlsx"
+            model="report.in.out.wizard"
+            string=" "
+            report_type="xlsx"
+            name="stock_inventory_excel_report.stock_io_report_xlsx.xlsx"
+            file="Stock Inventory Excel Report.xlsx"
+            attachment_use="False"
+        />
+
+    </data>
+</openerp>

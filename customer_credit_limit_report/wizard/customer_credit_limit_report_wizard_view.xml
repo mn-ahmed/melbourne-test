@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="credit_limit_report_report_wizard_view" model="ir.ui.view">
+            <field name="name">credit.limit.report.wizard.form</field>
+            <field name="model">credit.limit.report.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Filter by Date">
+                            <group>
+                                <field name="start_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>   
+                    </sheet>
+                    <footer>
+                        <button string="View" name="view_customer_credit_limit_report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_credit_limit_report_report_wizard" model="ir.actions.act_window">
+            <field name="name">Customer Credit Limit Report</field>
+            <field name="res_model">credit.limit.report.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="credit_limit_report_report_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_credit_limit_report_wizard" name="Customer Credit Limit Report"
+            action="action_credit_limit_report_report_wizard" parent="account_reports.account_reports_partners_reports_menu" sequence="30"/>
+    </data>
+
+
+
+</odoo>

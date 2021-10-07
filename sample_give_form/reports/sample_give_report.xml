@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_sample_give_product"
+            string="Sample Report "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="sample_give_form.report_sample_product" 
+            name="sample_give_form.report_sample_product"
+            print_report_name="'Sample Report- %s' % (object.name)"
+            menu='False'
+        />
+    </data>
+</odoo>

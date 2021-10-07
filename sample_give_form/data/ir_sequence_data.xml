@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sample_issue_code" model="ir.sequence">
+            <field name="name">Sample Issue Code</field>
+            <field name="code">sample.give</field>
+            <field name="prefix">SAM/%(range_year)s/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

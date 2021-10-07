@@ -1,0 +1,145 @@
+<odoo>
+       <report
+            id="account.account_invoices"
+            model="account.move"
+            string="Invoices"
+            report_type="qweb-pdf"
+            name="report_form.report_tax_invoice"
+            file="report_form.report_tax_invoice"
+            attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"
+            print_report_name="(object._get_report_base_filename())"
+            groups="account.group_account_invoice"
+        />
+       <report
+            id="yangon_account_invoices"
+            model="account.move"
+            string="Yangon Invoices"
+            report_type="qweb-pdf"
+            name="report_form.report_tax_invoice_yangon"
+            file="report_form.report_tax_invoice_yangon"
+            attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"
+            print_report_name="(object._get_report_base_filename())"
+            groups="account.group_account_invoice"
+        />
+       <report
+            id="mandalay_account_invoices"
+            model="account.move"
+            string="Mandalay Invoices"
+            report_type="qweb-pdf"
+            name="report_form.report_tax_invoice_mandalay"
+            file="report_form.report_tax_invoice_mandalay"
+            attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"
+            print_report_name="(object._get_report_base_filename())"
+            groups="account.group_account_invoice"
+        />
+       <report
+            id="sale.action_report_saleorder"
+            string="Quotation / Order"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="report_form.report_saleorder_inherit"
+            name="report_form.report_saleorder_inherit"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+        />
+       <report
+            id="action_report_saleorder_yangon"
+            string="Yangon Quotation / Order "
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="report_form.report_saleorder_yangon"
+            name="report_form.report_saleorder_yangon"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+
+        />
+      <report
+            id="action_report_saleorder_mandalay"
+            string="Mandalay Quotation / Order "
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="report_form.report_saleorder_mandalay"
+            name="report_form.report_saleorder_mandalay"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+
+        />
+      <report
+            string="Purchase Order"
+            id="purchase.action_report_purchase_order"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="report_form.report_purchaseorder_inherit"
+            file="report_form.report_purchaseorder_inherit"
+            print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))"
+        />
+     <report
+            string="Yangon Purchase Order"
+            id="action_report_purchase_order_yangon"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="report_form.report_purchaseorder_ygn"
+            file="report_form.report_purchaseorder_ygn"
+            print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))"
+             menu="False"
+        />
+     <report
+            string="Mandalay Purchase Order"
+            id="action_report_purchase_order_mandalay"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="report_form.report_purchaseorder_mdy"
+            file="report_form.report_purchaseorder_mdy"
+            print_report_name="
+                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+                'Purchase Order - %s' % (object.name))"
+             menu="False"
+        />
+
+        <report
+            string="Request for Quotation"
+            id="purchase.report_purchase_quotation"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="report_form.report_purchasequotation_inherit"
+            file="report_form.report_purchasequotation_inherit"
+            print_report_name="'Request for Quotation - %s' % (object.name)"
+        />
+     <report
+            string="YGN Request for Quotation"
+            id="report_purchase_quotation_ygn"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="report_form.report_purchasequotation_ygn"
+            file="report_form.report_purchasequotation_ygn"
+            print_report_name="'Request for Quotation - %s' % (object.name)"
+            menu="False"
+        />
+     <report
+            string="MDY Request for Quotation"
+            id="report_purchase_quotation_mdy"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="report_form.report_purchasequotation_mdy"
+            file="report_form.report_purchasequotation_mdy"
+            print_report_name="'Request for Quotation - %s' % (object.name)"
+             menu="False"
+        />
+     <record id="a4_paper_profoma_invoice" model="report.paperformat">
+            <field name="name">Customized A4</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top" eval="30"/>
+            <field name="margin_bottom" eval="30"/>
+            <field name="margin_left" eval="7"/>
+            <field name="margin_right" eval="7"/>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing" eval="25"/>
+            <field name="dpi" eval="90"/>
+            <field name="report_ids" eval="[(6, 0, [ref('sale.action_report_saleorder'),ref('report_form.action_report_saleorder_yangon'),ref('report_form.action_report_saleorder_mandalay'),
+                                                    ref('purchase.action_report_purchase_order'),ref('account.account_invoices'),ref('report_form.yangon_account_invoices'),ref('report_form.mandalay_account_invoices')
+                                                        ])]"/>
+        </record>
+
+</odoo>

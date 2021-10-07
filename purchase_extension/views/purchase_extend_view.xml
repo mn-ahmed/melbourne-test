@@ -1,0 +1,51 @@
+<odoo>
+  	<data>
+	      <record id="purchase_order_form_for_address" model="ir.ui.view">
+	      	<field name="name">purchase.order.form.inherit</field>
+	      	<field name="model">purchase.order</field>
+	      	<field name="inherit_id" ref="purchase.purchase_order_form"/>
+	      	<field name="arch" type="xml">
+	      		<xpath expr="//field[@name='partner_id']" position="after">
+	      			<label for="" name="address_name">
+                        <b invisible="1">Address</b>
+                    </label>
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street" />
+                        <field name="street2" placeholder="Street..." class="o_address_street"/>
+                        <field name="township_id" placeholder="Township..." class="o_address_street" options='{"no_open": True}'/>
+						<field name="state_id" invisible="1"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="ph_no" placeholder="Phone" class="o_address_phone"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="ZIP" class="o_address_street" options='{"no_open": True}'/>
+                    </div>
+	      		</xpath>
+	      	</field>
+	    </record>
+
+          <record id="view_purchase_order_view_filter_inherit_branch" model="ir.ui.view">
+            <field name="name">purchase.order.view.search</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/group" position="after">
+                       <filter string="Vendor state" name="state_id" context="{'group_by': 'state_id'}"/>
+                        <filter string="Vendor Township" name="township_id" context="{'group_by': 'township_id'}"/>
+                        <filter string="Vendor City" name="city" context="{'group_by': 'city'}"/>
+                </xpath>
+            </field>
+    </record>
+          <record id="view_purchase_order_filter_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.view.search</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/group" position="after">
+                       <filter string="Vendor state" name="state_id" context="{'group_by': 'state_id'}"/>
+                        <filter string="Vendor Township" name="township_id" context="{'group_by': 'township_id'}"/>
+                        <filter string="Vendor City" name="city" context="{'group_by': 'city'}"/>
+                </xpath>
+            </field>
+    </record>
+	</data>
+</odoo>

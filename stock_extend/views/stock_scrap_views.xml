@@ -1,0 +1,30 @@
+<odoo>
+  <data>    
+    <record id="stock_scrap_form_view_inherit" model="ir.ui.view">
+      <field name="name">stock.scrap.form.inherit</field>
+      <field name="model">stock.scrap</field>
+      <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[hasclass('o_row')]" position="after">
+          <field name="analytic_account_id"/>
+        </xpath>
+        <!-- KMH(1.9.2020) -->
+        <xpath expr="/form/sheet/group" position="after">
+          <field name="remarks" placeholder="Remarks"/>
+        </xpath>
+      </field>
+    </record>
+    <!-- KMH(1.9.2020) -->
+    <record id="view_stock_scrap_form_wizard_inherit" model="ir.ui.view">
+      <field name="name">stock.scrap.form.wizard.inherit</field>
+      <field name="model">stock.scrap</field>
+      <field name="inherit_id" ref="stock.stock_scrap_form_view2"/>
+      <field name="arch" type="xml">
+        <xpath expr="/form/group" position="after">
+          <field name="remarks" placeholder="Remarks"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_consignment_return_form" model="ir.ui.view">
+            <field name="name">consignment.return.form</field>
+            <field name="model">consignment.return</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <button name="btn_cancel"
+                                string="Cancel"
+                                type="object"
+                                attrs="{'invisible': [('state', 'not in', ['draft', 'confirm'])]}"/>
+                        <button name="btn_confirm"
+                                string="Confirm"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="action_view_delivery"
+                                    class="oe_stat_button"
+                                    icon="fa-truck"
+                                    attrs="{'invisible': [('delivery_count', '=', 0)]}">
+                                <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       domain="[('is_consignment_customer', '=', True)]"/>
+                                <field name="warehouse_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       domain="[('is_consignment_warehouse', '!=', True)]"/>
+                                <field name="user_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="date"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       required="1"/>
+                                <field name="pricelist_id"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       required="1"/>
+                                <field name="branch_id"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       required="1"/>
+                                <field name="transfer_ref" readonly="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Product Lines">
+                                <field name="line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id" required="1"
+                                               domain="[('consignment_ok', '=', True)]"/>
+                                        <field name="quantity"/>
+                                        <field name="delivered_qty"/>
+                                        <field name="price_unit"/>
+                                        <field name="discount_type" required="1"/>
+                                        <field name="discount_amt"/>
+                                        <field name="line_discount" invisible="1"/>
+                                        <field name="price_subtotal" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="consignment_return_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group col="6">
+                                    <group colspan="4"/>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_total"/>
+                                        </div>
+                                        <field name="amount_total"
+                                               attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"
+                                               widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_consignment_return_tree" model="ir.ui.view">
+            <field name="name">consignment.return.tree</field>
+            <field name="model">consignment.return</field>
+            <field name="arch" type="xml">
+                <tree default_order="id desc" create="false">
+                    <field name="name"/>
+                    <field name="partner_id" string="From"/>
+                    <field name="warehouse_id" string="To"/>
+                    <field name="transfer_ref"/>
+                    <field name="date"/>
+                    <field name="pricelist_id"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_consignment_return_search" model="ir.ui.view">
+            <field name="name">consignment.return.search</field>
+            <field name="model">consignment.return</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="transfer_ref"/>
+                    <group string="Group By...">
+                        <filter name="group_by_transfer_ref" string="Transfer Reference" context="{'group_by': 'transfer_ref'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_consignment_return" model="ir.actions.act_window">
+            <field name="name">Consignment Return</field>
+            <field name="res_model">consignment.return</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a consignment return here.
+                </p>
+                <p>
+                    You'll be able to manage your consignment return here.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

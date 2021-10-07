@@ -1,0 +1,15 @@
+<odoo>
+     <record id="view_order_product_search_inherit" model="ir.ui.view">
+        <field name="name">sale.report.search</field>
+        <field name="model">sale.report</field>
+         <field name="inherit_id" ref="sale.view_order_product_search"/>
+         <field name="arch" type="xml">
+             <xpath expr="//filter[@name='country_id']" position="after">
+                  <filter string="Customer State" name="customer_state_id" context="{'group_by':'customer_state_id'}"/>
+                  <filter string="Customer Township" name="customer_township_id" context="{'group_by':'customer_township_id'}"/>
+                  <filter string="Customer City" name="customer_city_id" context="{'group_by':'customer_city_id'}"/>
+             </xpath>
+         </field>
+
+    </record>
+</odoo>

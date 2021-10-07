@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_discount" model="ir.ui.view">
+        <field name="name">purchase.order.form.discount</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//field[@name='taxes_id']"
+                position="before">
+                <field name="discount_type" />
+                <field name="discount_amount" />
+            </xpath>
+            <xpath expr="//field[@name='amount_tax']"
+                position="replace">
+            </xpath>
+
+            <xpath expr="//field[@name='amount_untaxed']"
+                position="after">
+                <field name="total_line_discount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_total_line_disc"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_total_after_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_discount_global" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+            <xpath expr="//field[@name='notes']"
+                position="before">
+                <group>
+                    <field name="discount_type" />
+                    <field name="discount_rate"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    
+    
+</odoo>
+

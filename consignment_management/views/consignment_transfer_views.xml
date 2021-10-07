@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_consignment_transfer_form" model="ir.ui.view">
+            <field name="name">consignment.transfer.form</field>
+            <field name="model">consignment.transfer</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="btn_cancel"
+                                string="Cancel"
+                                type="object"
+                                attrs="{'invisible': [('state', 'not in', ['draft', 'confirm'])]}"/>
+                        <button name="btn_confirm"
+                                string="Confirm"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                class="oe_highlight"/>
+                        <button name="btn_order"
+                                string="Order"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'deliver')]}"
+                                class="oe_highlight"/>
+                        <button name="btn_return"
+                                string="Return"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'deliver')]}"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="action_view_return"
+                                    class="oe_stat_button"
+                                    icon="fa-truck"
+                                    attrs="{'invisible': [('return_count', '=', 0)]}">
+                                <field name="return_count" widget="statinfo" string="Return"/>
+                            </button>
+                            <button type="object"
+                                    name="action_view_orders"
+                                    class="oe_stat_button"
+                                    icon="fa-shopping-cart"
+                                    attrs="{'invisible': [('order_count', '=', 0)]}">
+                                <field name="order_count" widget="statinfo" string="Order"/>
+                            </button>
+                            <button type="object"
+                                    name="action_view_delivery"
+                                    class="oe_stat_button"
+                                    icon="fa-truck"
+                                    attrs="{'invisible': [('delivery_count', '=', 0)]}">
+                                <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="warehouse_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       domain="[('is_consignment_warehouse', '!=', True)]"/>
+                                <field name="partner_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       domain="[('is_consignment_customer', '=', True)]"
+                                       />
+                                <!-- <field name="partner_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       domain="[('is_consignment_customer', '=', True)]"
+                                       widget="res_partner_many2one"
+                                       context = "{'show_address':1, 'show_vat':True, 'display_website': True}"
+                                       options="{&quot;always_reload&quot;: True}"/> -->
+                                <label for="" name="address_name">
+                                    <b invisible="1">Address</b>
+                                </label>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street" />
+                                    <field name="street2" placeholder="Street..." class="o_address_street"/>
+                                    <field name="township_id" placeholder="Township..." class="o_address_street" options='{"no_open": True}'/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="ph_no" placeholder="Phone" class="o_address_phone"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id" placeholder="ZIP" class="o_address_street" options='{"no_open": True}'/>
+                                </div>
+                                <field name="user_id" required="1"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="date"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       required="1"/>
+                                <field name="pricelist_id"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       required="1"/>
+                                <field name="branch_id"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       required="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Product Lines">
+                                <field name="line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id" required="1"
+                                               domain="[('consignment_ok', '=', True)]"/>
+                                        <field name="quantity"/>
+                                        <field name="delivered_qty" readonly="1"/>
+                                        <field name="returned_qty" readonly="1"/>
+                                        <field name="qty_left" readonly="1"/>
+                                        <field name="ordered_qty" readonly="1"/>
+                                        <field name="price_unit"/>
+                                        <field name="discount_type" required="1"/>
+                                        <field name="discount_amt"/>
+                                        <field name="line_discount" invisible="1"/>
+                                        <field name="price_subtotal" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="consignment_transfer_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group col="6">
+                                    <group colspan="4"/>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_total"/>
+                                        </div>
+                                        <field name="amount_total"
+                                               attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"
+                                               widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_consignment_transfer_tree" model="ir.ui.view">
+            <field name="name">consignment.transfer.tree</field>
+            <field name="model">consignment.transfer</field>
+            <field name="arch" type="xml">
+                <tree default_order="id desc">
+                    <field name="name"/>
+                    <field name="warehouse_id"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="pricelist_id"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_consignment_transfer_search" model="ir.ui.view">
+            <field name="name">consignment.transfer.search</field>
+            <field name="model">consignment.transfer</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <group string="Group By...">
+                        <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_consignment_transfer" model="ir.actions.act_window">
+            <field name="name">Consignment Transfer</field>
+            <field name="res_model">consignment.transfer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a consignment transfer here.
+                </p>
+                <p>
+                    You'll be able to manage your consignment transfer here.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

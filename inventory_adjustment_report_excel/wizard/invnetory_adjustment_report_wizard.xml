@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_inventory_adjustment_wizard_report" model="ir.ui.view">
+			<field name="name">Inventory Adjustment Report</field>
+			<field name="model">inventory.adjust.report</field>
+			<field name="arch" type="xml">
+				<form string="Inventory Adjustment Report">	
+					<group>
+						<group>
+						    <field name="warehouse_id" />
+							<field name="location_id" />
+							<field name="start_date" />
+							<field name="end_date" />		
+						</group>
+					</group>			
+					<footer>
+						<button name="export_excel" string="Export Excel" type="object"
+							class="oe_highlight" />
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_inventory_adjust_wizard_id">
+			<field name="name">Inventory Adjustment Report</field>
+			<field name="res_model">inventory.adjust.report</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_inventory_adjustment_wizard_report" />
+			<field name="target">new</field>			
+		</record>
+		
+		<menuitem action="action_inventory_adjust_wizard_id" id="menu_action_inventory_adjust_report_wizard"
+			parent="stock.menu_warehouse_report" sequence="11" name="Inventory Adjustment Report"/>
+			
+	</data>
+</odoo>

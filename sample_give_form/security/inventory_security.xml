@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_product_form_approve" model="ir.ui.view">
+            <field name="name">damage.product.form.approve</field>
+            <field name="model">damage.product</field>
+            <field name="inherit_id" ref="damage_form.view_product_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_damage_approved')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_approved" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>

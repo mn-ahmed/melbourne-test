@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_access_cancel" model="ir.ui.view">
+            <field name="name">sale.order.form.access.cancel</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_cancel')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_cancel" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="view_order_form_access_invoice" model="ir.ui.view">
+            <field name="name">sale.order.form.access.invoice</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_create_invoice')])]"/>
+            <field name="arch" type="xml">
+                <button name="%(sale.action_view_sale_advance_payment_inv)d" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+          <record id="view_order_form_access_draft" model="ir.ui.view">
+            <field name="name">sale.order.form.access.draft</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_draft')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_draft" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_account">
+            <field name="name">Accounting Setting</field>
+            <field name="sequence">202</field>
+        </record>
+        <record id="group_cancel_entry" model="res.groups">
+            <field name="name">Hide Cancel Entry</field>
+            <field name="category_id" ref="user_access_right.module_category_account"/>
+        </record>
+        <record id="group_reset_to_draft" model="res.groups">
+            <field name="name">Hide Reset To Draft</field>
+            <field name="category_id" ref="user_access_right.module_category_account"/>
+        </record>
+        <record id="group_register_payment" model="res.groups">
+            <field name="name">Hide Register Payment</field>
+            <field name="category_id" ref="user_access_right.module_category_account"/>
+        </record>
+        <record id="group_credit_note" model="res.groups">
+            <field name="name">Hide Credit Note</field>
+            <field name="category_id" ref="user_access_right.module_category_account"/>
+        </record>
+        <record id="group_create_edit" model="res.groups">
+            <field name="name">Hide Create and Edit</field>
+            <field name="category_id" ref="user_access_right.module_category_account"/>
+        </record>
+    </data>
+</odoo>

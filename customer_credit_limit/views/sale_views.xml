@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_credit_limit" model="ir.ui.view">
+            <field name="name">sale.order.form.credit.limit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet//field[@name='payment_term_id']" position="after">
+                    <field name="credit_limit"/>
+                    <field name="over_credit" invisible="1"/>
+                    <field name="total_due" force_save="1" />
+                    <field name="sale_date" invisible="1"/>
+                    <field name="invoice_date_due" force_save="1"/>
+                    <field name="warehouse_id" options="{'no_create': True}" groups="stock.group_stock_multi_warehouses" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

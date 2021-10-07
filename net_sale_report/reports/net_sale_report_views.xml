@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_net_sale_report_tree" model="ir.ui.view">
+            <field name="name">net.sale.report.tree</field>
+            <field name="model">net.sale.report</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false" delete="false">
+                    <field name="date"/>
+                    <field name="inv_number"/>
+                    <field name="partner_id"/>
+                    <field name="sale_man_id" optional="show"/>
+                    <field name="sale_team_id" optional="show"/>
+                    <field name="item_code"/>
+                    <field name="brand_id" optional="show"/>
+                    <field name="sale_qty"/>
+                    <field name="sale_amt"/>
+                    <field name="returned_qty"/>
+                    <field name="returned_amt"/>
+                    <field name="net_sale_qty"/>
+                    <field name="net_sale_amt"/>
+                    <field name="product_cost" optional="show"/>
+                    <field name="branch_id" optional="show"/>
+                    <field name="delivery_address" optional="show"/>
+                    <field name="contact_person" optional="show"/>
+                    <field name="contact_telephone" optional="show"/>
+                    <field name="contact_mobile" optional="show"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_net_sale_report_pivot" model="ir.ui.view">
+            <field name="name">net.sale.report.pivot</field>
+            <field name="model">net.sale.report</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="date" type="row"/>
+                    <field name="partner_id" type="row"/>
+                    <field name="sale_qty" type="measure"/>
+                    <field name="sale_amt" type="measure"/>
+                    <field name="returned_qty" type="measure"/>
+                    <field name="returned_amt" type="measure"/>
+                    <field name="net_sale_qty" type="measure"/>
+                    <field name="net_sale_amt" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="action_net_sale_report" model="ir.actions.act_window">
+            <field name="name">Net Sale Report</field>
+            <field name="res_model">net.sale.report</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    There is no data.
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_net_sale_report"
+                  name="Net Sale Report"
+                  parent="sale.menu_sale_report"
+                  action="action_net_sale_report"
+                  sequence="100"/>
+    </data>
+</odoo>

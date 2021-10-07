@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="view_template_property_form_extension" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock_account.view_template_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div//button[@type='action']" position="replace">
+                    <button string="Update Cost" type="action"
+                            name="%(stock_account.action_view_change_standard_price)d"
+                            attrs="{'invisible':['|', '|', ('valuation','!=', 'real_time'), ('cost_method', 'not in', ['average', 'standard']), ('product_variant_count', '>', 1)]}"
+                            class="oe_link oe_read_only" groups="user_access_right.group_cost_manager1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template_procurement</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_cost_manager')])]"/>
+            <field name="arch" type="xml">
+                <div name="hide" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </div>
+
+
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+    </data>
+</odoo>

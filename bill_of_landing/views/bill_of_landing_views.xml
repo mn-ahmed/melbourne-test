@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bill_landing_pivot">
+            <field name="name">bill.landing.pivot</field>
+            <field name="model">bill.landing</field>
+            <field name="arch" type="xml">
+                <pivot string="Bill Landing">
+                    <field name="partner_id" type="row"/>
+                    <field name="po_amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="bill_landing_tree" model="ir.ui.view">
+            <field name="name">bill.landing.tree</field>
+            <field name="model">bill.landing</field>
+            <field name="arch" type="xml">
+                <tree string="Bill Landing">
+                    <field name="line_no"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="feet_20" optional="hide"/>
+                    <field name="feet_40" optional="hide"/>
+                    <field name="etd_date"/>
+                    <field name="eta_date" />
+                    <field name="bill" optional="hide"/>
+                    <field name="co" optional="hide"/>
+                    <field name="pl_cl" optional="hide"/>
+                    <field name="form_ed" optional="hide"/>
+                    <field name="date_clear" optional="hide"/>
+                    <field name="brand_id"/>
+                    <field name="description" />
+                    <field name="invoice_number"/>
+                    <field name="bill_number"/>
+                    <field name="invoice_amount"/>
+                    <field name="sparepart_invoice" optional="hide"/>
+                    <field name="declare_inv_amount" optional="hide"/>
+                    <field name="freight_charges" optional="hide"/>
+                    <field name="insurance" optional="hide"/>
+                    <field name="certificate_number" optional="hide"/>
+                    <field name="custom_duty" optional="hide"/>
+                    <field name="commerial_tax" optional="hide"/>
+                    <field name="advanced_Tax" optional="hide"/>
+                    <field name="other_charges" optional="hide"/>
+                    <field name="hs_code" optional="hide"/>
+                    <field name="po_amount" optional="show"/>
+                    <field name="po_charges" optional="hide"/>
+                    <field name="agent_fees" optional="hide"/>
+                    <field name="rk_paid" optional="hide"/>
+                    <field name="transporation" optional="hide"/>
+                    <field name="warehouse_charges" optional="hide"/>
+                    <field name="sd_fields" optional="hide"/>
+                    <field name="license_fees" optional="hide"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="bill_landing_form" model="ir.ui.view">
+            <field name="name">bill.landing.form</field>
+            <field name="model">bill.landing</field>
+            <field name="arch" type="xml">
+                <form string="Bill Landing">
+                <header>
+                    <button name="button_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                    <button name="button_draft" states="cancel" string="Set to Draft" type="object" />
+                    <button name="button_cancel" states="draft,pending" string="Cancel" type="object" />
+                    <button name="button_done" type="object" states="pending" class="oe_highlight" string="Done"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,done" readonly="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="partner_id" attrs="{'readonly': [('state', 'not in', 'draft')]}" options="{'no_create':True, 'no_open': True}"/>
+                            <field name="feet_20" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="feet_40" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="bill" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="co" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="pl_cl" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="form_ed" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="etd_date" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="eta_date" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="date_clear" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="brand_id" attrs="{'readonly': [('state', 'not in', 'draft')]}" options="{'no_create':True, 'no_open': True}"/>
+                            <field name="description" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="custom_duty" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="commerial_tax" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="advanced_Tax" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="other_charges" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="po_amount"/>
+                        </group>
+                        <group>
+                            <field name="invoice_number" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="bill_number" options="{'no_create': True, 'no_open': True}"
+                                   domain="[('type', '=', 'in_invoice'), ('partner_id', '=', partner_id)]"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="inv_currency_id" invisible="1"/>
+                            <field name="invoice_amount" attrs="{'readonly': [('state', 'not in', 'draft')]}"
+                                   force_save="1" readonly="1" widget='monetary' options="{'currency_field': 'inv_currency_id'}"/>
+                            <field name="sparepart_invoice" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="declare_inv_amount" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="freight_charges" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="insurance" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="certificate_number" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="hs_code" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="po_charges" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="agent_fees" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="rk_paid" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="transporation" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="warehouse_charges" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="sd_fields" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="license_fees" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="bill_landing_view_search" model="ir.ui.view">
+            <field name="name">bill.landing.select</field>
+            <field name="model">bill.landing</field>
+            <field name="arch" type="xml">
+                <search string="Bill Landing">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Vendor" name="vendor" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_bill_landing" model="ir.actions.act_window">
+            <field name="name">Bill Of Landing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bill.landing</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="view_id" ref="bill_landing_tree"/>
+            <field name="search_view_id" ref="bill_landing_view_search"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a bill of landing
+              </p>
+            </field>
+        </record>
+        <menuitem id="menu_shipping_process" name="Shipping Process" parent="purchase.menu_purchase_root" sequence="4" />
+        <menuitem action="action_bill_landing" id="action_bill_of_landing" parent="menu_shipping_process" sequence="1"/>
+    </data>
+</odoo>

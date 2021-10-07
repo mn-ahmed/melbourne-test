@@ -1,0 +1,75 @@
+<odoo>
+  <data>
+  <record id="view_invoice_tree_inherit" model="ir.ui.view">
+      <field name="name">account.move.tree</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_invoice_tree"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='invoice_user_id']" position="replace">
+              <field name="sale_by"/>
+          </xpath>
+      </field>
+  </record>
+    <record id="view_move_form_inherit_oppo" model="ir.ui.view">
+      <field name="name">account.move.form.inherit.oppo</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='invoice_user_id']" position="replace">
+        </xpath>
+        <xpath expr="//field[@name='ref']" position="after">
+          <field name="invoice_user_id" string="Sale By" invisible="1"/>
+          <field name="sale_by" options='{"no_open": True,"no_create":True}'
+            attrs="{'invisible': [('type', 'not in', ('out_invoice', 'out_refund', 'out_receipt'))]}" force_save="1"/>
+        </xpath>
+          <xpath expr="//field[@name='partner_shipping_id']" position="replace">
+          <field name="partner_shipping_id" invisible="1" />
+
+        </xpath>
+          <xpath expr="//field[@name='currency_id']" position="after">
+              <field name="so_name" attrs="{'invisible': [('type', 'not in', ('out_invoice'))]}"/>
+              <field name="picking_number" attrs="{'invisible': [('type', 'not in', ('out_invoice'))]}"/>
+          </xpath>
+        <xpath expr="//field[@name='invoice_date']" position="after">
+          <field name="contact_id"       attrs="{'invisible': [('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt','entry'))]}"/>
+          <field name="contact_phone"    attrs="{'invisible': [('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt','entry'))]}"/>
+          <field name="contact_address"  attrs="{'invisible': [('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt','entry'))]}"/>
+          <field name="accept_person"    attrs="{'invisible': [('type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt','entry'))]}"/>
+        </xpath>
+      </field>
+    </record>
+    <record id="view_move_pivot" model="ir.ui.view">
+        <field name="name">account.move.pivot</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <pivot string="Invoices">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="ref"/>
+                <field name="journal_id"/>
+                <field name="company_id"/>
+                <field name="amount_total_signed"/>
+                <field name="state"/>
+                <field name="currency_id"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_move_out_invoice_type_exten" model="ir.actions.act_window">
+            <field name="name">Invoices</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,kanban,pivot,form</field>
+            <field name="view_id" ref="account.view_invoice_tree"/>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="domain">[('type', '=', 'out_invoice')]</field>
+            <field name="context">{'default_type': 'out_invoice'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a customer invoice
+              </p><p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+              </p>
+            </field>
+        </record>
+  </data>
+</odoo>

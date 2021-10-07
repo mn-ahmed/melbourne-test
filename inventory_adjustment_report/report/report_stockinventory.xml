@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_inventory_inherit" inherit_id="stock.report_inventory">
+            <xpath expr="//div[hasclass('page')]" position="replace">
+                <div class="page">
+                    <h2><center>Stock Inventory</center></h2>
+                    <div class="row" style="padding-bottom:5px;font-size:14px;">
+                        <div class="row" style="width:60%;">
+                            <div style="color:black;font-weight: bold;width: 30%;padding-left: 40px">
+                                <div style="padding-top:10px;padding-bottom:5px;;height:56px;">
+                                    <strong>Reference</strong>
+                                </div>
+                                <!-- <div style="padding-top:10px;padding-bottom:5px;;height:43px;">
+                                    <strong>Location</strong>
+                                </div> -->
+                                <!-- <div style="padding-top:10px;padding-bottom:5px;height:43px;">
+                                    <strong>Inventory of</strong>
+                                </div> -->
+                            </div>
+                            <div class="col-xs-6" style="width: 70%;">
+                                <div style="padding-top:10px;padding-bottom:5px;height:56px;">
+                                    <t t-if="o.name">
+                                        :<span t-field="o.name"/>
+                                    </t>
+                                </div>
+                                <!-- <div style="padding-top:10px;padding-bottom:5px;height:43px;">
+                                    <t t-if="o.location_id">
+                                        <span t-field="o.location_id"/>
+                                    </t>
+                                </div> -->
+                                <!-- <div style="padding-top:10px;padding-bottom:5px;height:43px;">
+                                    <t t-if="o.filter">
+                                        <span t-field="o.filter"/>
+                                    </t>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="row" style="width:40%;">
+                            <div style="color:black;font-weight: bold;width: 40%;">
+                                <!-- <div style="padding-top:10px;padding-bottom:5px;padding-left:20px;height:43px;">
+                                    <strong>Inventory Date</strong>
+                                </div> -->
+                                <div style="padding-top:10px;padding-bottom:5px;padding-left:20px;height:43px;">
+                                    <strong>Accounting Date</strong>:
+                                </div>
+                                <!-- <t t-if="o.product_id">
+                                    <div style="padding-top:10px;padding-bottom:5px;padding-left:20px;height:50px;">
+                                        <strong>Product</strong>
+                                    </div>
+                                </t> -->
+                            </div>
+                            <div style="width: 60%;">
+                                <!-- <div style="padding-top:10px;padding-bottom:5px;padding-left:15px;height:43px;">
+                                    <t t-if="o.date">
+                                        <span t-field="o.date"/>
+                                    </t>
+                                </div> -->
+                                <div style="padding-top:10px;padding-bottom:5px;padding-left:15px;height:43px;">
+                                    <t t-if="o.accounting_date">
+                                        <span t-field="o.accounting_date"/>
+                                    </t>
+                                </div>
+                                <!-- <t t-if="o.product_id">
+                                    <div style="padding-top:10px;padding-bottom:5px;padding-left:15px;height:50px;">
+                                        <t t-if="o.product_id">
+                                            <span t-field="o.product_id.name"/>
+                                        </t>
+                                    </div>
+                                </t> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <t t-set="locations" t-value="o.line_ids.mapped('location_id')"/>
+                    <table class="table table-sm" style="padding-top:20px;font-size:14px;">
+                        <thead>
+                            <tr>
+                                <th ><strong>CODE</strong></th>
+                                <th><strong>Product</strong></th>
+                                <th><strong>Location</strong></th>
+                                <th groups="stock.group_tracking_lot"><strong>Package</strong></th>
+                                <th class="text-right"><strong>Qty</strong></th>
+                                <th class="text-right"><strong>Uom</strong></th>
+                                <th class="text-right"><strong>Unit Cost</strong></th>
+                                <th class="text-right"><strong>Amount</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="locations" t-as="location">
+                                <tr t-foreach="o.line_ids.filtered(lambda line: line.location_id.id == location.id)" t-as="line">
+                                    <td><span t-field="line.product_id.default_code"/></td>
+                                    <td><span t-field="line.product_id.name"/></td>
+                                    <td><span t-field="line.location_id"/></td>
+                                    <td groups="stock.group_tracking_lot"><span t-field="line.package_id"/></td>
+                                    <td class="text-right"><span t-esc="((line.product_qty)-(line.theoretical_qty))"/> </td>
+                                    <td class="text-right"><span t-field="line.product_uom_id" groups="uom.group_uom"/></td>
+                                    <td class="text-right"><span t-field="line.product_id.standard_price"/></td>
+                                    <td class="text-right"><span t-esc="'%.2f'%(((line.product_qty)-(line.theoretical_qty))*(line.product_id.standard_price))"/></td>
+                                </tr>
+                            </t>
+                            <tr></tr>
+                            <tr>
+                                <th ></th>
+                                <th class="text-left"><strong>Total</strong></th>
+                                <th class="text-right"></th>
+                                <!-- <th groups="stock.group_production_lot"><strong>Production Lot</strong></th> -->
+                                <th class="text-right"><t t-esc="sum (((l.product_qty)-(l.theoretical_qty)) for l in o.line_ids)" /></th>
+                                <th class="text-right"></th>
+                                <th class="text-right"></th>
+                                <th class="text-right"><t t-esc="sum((((l.product_qty)-(l.theoretical_qty))*(l.product_id.standard_price)) for l in o.line_ids)"  t-options='{"widget": "float", "precision": 2}'/></th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- <t t-if="o.filter == 'product' and o.product_id">
+                      <div class="row justify-content-end">
+                        <div class="col-4">
+                             <table class="table table-sm" style="font-size:14px;">
+                                <tr class="border-black">
+                                    <td><strong>Total Quantity</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="o.total_qty"/> <span t-field="o.product_id.uom_id"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                      </div>
+                    </t> -->
+                    <br/><br/><br/>
+            <div class="row" style="page-break-inside:avoid;font-size:14px;">
+                <div  class="text-center" style="width:20%;align:left;">
+                    -----------------------------------<br/>
+                    Prepaired By  
+                </div>
+                <div class="text-center" style="width:60%;align:center;">
+                    -----------------------------------<br/>
+                    Authorised Signature
+                </div>
+                <div class="text-center" style="width:20%;align:right;">
+                    -----------------------------------<br/>
+                    Checked By
+                </div>
+            </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

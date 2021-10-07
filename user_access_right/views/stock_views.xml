@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_inventory_tree_create" model="ir.ui.view">
+            <field name="name">stock.inventory.tree.create</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_tree"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_inventory_adjustment')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="vpicktree_access" model="ir.ui.view">
+            <field name="name">stock.picking.tree.access</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_picking_transfer')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_picking_form_access" model="ir.ui.view">
+            <field name="name">stock.picking.form.access</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_picking_transfer')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_inventory_form_create" model="ir.ui.view">
+            <field name="name">stock.inventory.form.create</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_inventory_adjustment')])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_picking_form_access_picking" model="ir.ui.view">
+            <field name="name">stock.picking.form.access.picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_picking_return')])]"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.act_stock_return_picking)d" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="view_picking_form_access_scrap" model="ir.ui.view">
+            <field name="name">stock.picking.form.access.scrap</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_picking_scrap')])]"/>
+            <field name="arch" type="xml">
+                <button name="button_scrap" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="view_picking_form_access_lock" model="ir.ui.view">
+            <field name="name">stock.picking.form.access.lock</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_picking_lock')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_toggle_is_locked" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+        <record id="view_picking_form_domain" model="ir.ui.view">
+            <field name="name">stock.picking.form.domain</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_operation_type')])]"/>
+            <field name="arch" type="xml">
+                <field name="picking_type_id" position="attributes" >
+                    <attribute name="domain">[('code', '=', ('internal', 'incoming'))]</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="product_template_form_view_procurement_button_inherit" model="ir.ui.view">
+            <field name="name">product.template_procurement</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="groups_id" eval="[(6, 0, [ref('user_access_right.group_update_manager')])]"/>
+            <field name="arch" type="xml">
+                <button name="action_update_quantity_on_hand" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </button>
+            </field>
+        </record>
+
+
+
+
+    </data>
+</odoo>

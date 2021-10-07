@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="polist_payable_xlsx_report_view" model="ir.ui.view">
+        <field name="name">PO Payable Report</field>
+        <field name="model">popaybale.receviable.xlsx.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Report Options">
+                <separator string="PO Aged Payable Report"/>
+                <group>
+                    <group>
+                        <field name="due_filter_date"/>
+                    </group>
+                    <field name="supplier_id" 
+                    domain="[('supplier', '=', True)]"
+                    context="{'default_supplier':1,'default_customer':0}" >
+                        <tree>
+                            <field name="sequence_id"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                    <!-- <field name="vendor_name" attrs="{'invisible':[('vendor','!=','vname')]}"/> -->
+                </group>
+                <footer>
+                    <button name="print_popaybale_receviable_xlsx" string="PRINT" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_aged_payable_receivable_report" model="ir.actions.act_window">
+        <field name="name">PO Payable Excel</field>
+        <field name="res_model">popaybale.receviable.xlsx.report.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="po_payable_receivable_report" name="Aged Payable Report" parent="purchase.purchase_report" action="action_aged_payable_receivable_report"/>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="search_template_coa">
+        <a type="button" class="dropdown-toggle account_coa_filter" data-toggle="dropdown">
+            <span class="fa fa-folder-open"/> COA
+            <span class="caret"/>
+        </a>
+        <ul class="dropdown-menu o_filters_menu" role="menu">
+            <li style='margin-left: 10px; margin-right: 10px;'>
+                <b>COA</b><br />
+                <select class="js_coa_account_auto_complete" data-filter="coa_account_ids" multiple="multiple" style="min-width: 100px;">
+                    <t t-foreach="coa_account_ids" t-as="a">
+                        <option t-att-value="a[0]"><t t-esc="a[1]" /></option>
+                    </t>
+                </select>
+            </li>
+        </ul>
+    </template>
+
+    <template id="coa_account_search_template" inherit_id="account_reports.search_template">
+        <xpath expr="//div" position="after">
+            <div class="btn-group o_dropdown o_account_reports_filter_coa_account" t-if="options.get('coa_account')">
+                <t t-call="partner_ledger_coa_filter.search_template_coa"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

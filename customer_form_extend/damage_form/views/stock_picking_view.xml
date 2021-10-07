@@ -1,0 +1,28 @@
+<odoo>
+  <data>    
+    <record id="view_picking_form_sample" model="ir.ui.view">
+      <field name="name">stock.picking.form.sample</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='scheduled_date']" position="after">
+          <field name="issued_date" attrs="{'invisible': [('transfer_type', '!=', ('damage_return'))]}"/>
+        </xpath>
+        <xpath expr="//header" position="inside">
+            <button name="%(action_report_damage_product)d" string="Print Damage Issue" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('damage_delivery'))]}"/>
+            <button name="%(action_damage_received)d" string="Print Damage Receipt" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('damage_receipt'))]}"/>
+            <button name="%(action_damage_delivery)d" string="Print Damage Delivery" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('damage_delivery'))]}"/>
+        </xpath>
+        <xpath expr="//page[@name='note']" position="after">
+          <page string="Damage Remark" name="remark" attrs="{'invisible': [('transfer_type', '!=', ('damage_delivery'))]}">
+              <field name="damaged_remark" string="Remark" placeholder="Add an internal remark that will be printed on the Sale Picking Operations sheet"/>
+          </page>
+        </xpath>
+
+
+      </field>
+    </record>
+<!--      new added by znl 10_feb_2021-->
+
+  </data>
+</odoo>

@@ -1,0 +1,41 @@
+<odoo>
+  <data>
+    <record id="view_picking_form_inherit_oppo" model="ir.ui.view">
+      <field name="name">stock.picking.form.inherit.oppo</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='scheduled_date']" position="before">
+          <field name="delivery_date" string="Expected Date"
+                 attrs="{'readonly': [('state', 'in', 'assigned')],'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='scheduled_date']" position="replace">
+          <field name="scheduled_date" string="Date"/>
+        </xpath>
+        <xpath expr="//form//sheet//group//div[hasclass('o_td_label')]" position="replace">
+          <div class="o_td_label">
+              <label for="partner_id" string="Customer Name" style="font-weight:bold;" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+              <label for="partner_id" string="Receive From" style="font-weight:bold;" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
+              <label for="partner_id" string="Contact" style="font-weight:bold;" attrs="{'invisible': [('picking_type_code', 'in', ['incoming', 'outgoing'])]}"/>
+          </div>
+        </xpath>
+        <xpath expr="//field[@name='origin']" position="after">
+          <field name="contact_person"   string="Contact Person"  attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+          <field name="contact_phone"    attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+          <field name="contact_address"  attrs="{'invisible': [('picking_type_code', '=', 'incoming')]}"/>
+          <field name="warehouse_id" invisible="1"/>
+        </xpath>
+        <xpath expr="//header" position="inside">
+            <button name="%(action_report_sale_order_issue)d" string="Print Sale Order Issue" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('sale'))]}"/>
+            <button name="%(action_report_sale_delivery)d" string="Print Sale Delivery" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('sale'))]}"/>
+            <button name="%(action_report_sale_return)d" string="Print Sale Return" type="action" class="oe_highlight" attrs="{'invisible': [('transfer_type', '!=', ('sale_return'))]}"/>
+        </xpath>
+        <xpath expr="//page[@name='note']" position="after">
+          <page string="Sale Remark" name="remark" attrs="{'invisible': [('transfer_type', '!=', ('sale'))]}">
+              <field name="sale_remark" string="Remark" placeholder="Add an internal remark that will be printed on the Sale Picking Operations sheet"/>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

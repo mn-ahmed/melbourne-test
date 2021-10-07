@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_pos_branch" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/multi_branches_pos/static/src/js/models.js"/>
+        </xpath>
+    </template>
+
+    <!-- POS Config -->
+    <record id="inherit_view_pos_branch_config_form" model="ir.ui.view">
+        <field name="name">pos_branch_config_inherited</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='company']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="branch" groups="multi_branches.group_multi_branch">
+                    <div class="o_setting_right_pane">
+                        <label for="pos_branch_ids" class="col-lg-2"/>
+                        <field name="pos_branch_ids" nolabel="1" widget="many2many_tags"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_view_pos_branch_session_form" model="ir.ui.view">
+        <field name="name">pos.session.view.form</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="after">
+                <field name="branch_id" options="{'no_quick_create': True, 'no_create_edit' : True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="pos_order_branch_form_inherit">
+        <field name="name">pos.order.view.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="branch_id" groups="multi_branches.group_multi_branch" string="Branch" readonly="True"/>
+            </xpath>
+            <xpath expr="//page/field[@name='payment_ids']/tree/field[@name='payment_method_id']" position="before">
+                <field name="branch_id" groups="multi_branches.group_multi_branch"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

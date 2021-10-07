@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_sample_delivery"
+            string="Sample Delivery "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="sample_give_form.report_stock_sample_delivery" 
+            name="sample_give_form.report_stock_sample_delivery"
+            print_report_name="'Sample Delivery- %s' % (object.name)"
+            menu='False'
+        />
+        <report 
+            id="action_report_sample_return"
+            string="Sample Return "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="sample_give_form.report_stock_sample_return" 
+            name="sample_give_form.report_stock_sample_return"
+            print_report_name="'Sample Return- %s' % (object.name)"
+            menu='False'
+        />
+    </data>
+</odoo>

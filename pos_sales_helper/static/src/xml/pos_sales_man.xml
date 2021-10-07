@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="SalesManSelect">
+        <div class="modal-dialog">
+            <div class="popup">
+                <p class="title">
+                    Select Sale Man
+                </p>
+                <div class="body" style="margin:0;">
+                    <div class="clientlist-screen screen" style="margin-bottom:60px">
+                        <div class="screen-content">
+                            <section class="full-content">
+                                <div class='window'>
+                                    <section class='subwindow'>
+                                        <div class='subwindow-container'>
+                                            <div>
+                                                <input class="myfiltersales" type="text" id="salesInput" placeholder="Search by names..."/>
+                                                <input type="hidden" id="sales_id"/>
+                                            </div>
+                                            <div class='subwindow-container-fix touch-scrollable scrollable-y'>
+                                                <table class="client-list table" id="myTablesales">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:left">Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="client-list-contents">
+                                                        <t t-foreach="widget.pos.sales_mans" t-as="sales_man">
+                                                            <tr class="line-index client-line" t-att-id="sales_man.id" t-att-value="sales_man.name">     
+                                                                <td style="text-align:left">
+                                                                    <t t-esc="sales_man.name"/>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        Ok
+                    </div>
+                    <div class="button cancel">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="SalesManButton">
+        <div class='control-button'>
+            <i class='fa fa-tag'/> Sale Man
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_hr_expense_sheet_form-sign" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form-sign</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_info']" position="after">
+                    <page name="signature" string="Approved User Signature" >
+                        <group>
+                            <group>
+                                <div class="o_row o_td_label">
+                                <label for="first_signature"/>
+                                </div>
+                                <div class="row">
+                                    <field name="first_signature" widget="image" readonly="True"/>
+                                </div>
+                                <field name="first_date" readonly="True"/>
+                            </group>
+                            <group>
+                                <div class="o_row o_td_label">
+                                    <label for="second_signature"/>
+                                </div>
+                                <div class="row">
+                                    <field name="second_signature" widget="image" readonly="True"/>
+                                </div>
+                                <field name="second_date" readonly="True"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

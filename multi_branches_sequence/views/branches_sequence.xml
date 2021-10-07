@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_branch_from_sequence">
+            <field name="name">res.branch.from.sequence</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="multi_branches.view_branch_from"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]" position="after">
+                    <page name="code" string="Sequence Code Generate">
+                        <group>
+                            <group name="sale" string="SO Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="so_code"/>
+                                </div>
+                                <div>
+                                    <field name="so_code"/>
+                                </div>
+                                <field name="so_sequence_number_next"/>
+                                <field name="so_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="purchase" string="PO Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="po_code"/>
+                                </div>
+                                <div>
+                                    <field name="po_code"/>
+                                </div>
+                                <field name="po_sequence_number_next"/>
+                                <field name="po_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="customer_inv" string="Invoice Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="inv_code"/>
+                                </div>
+                                <div>
+                                    <field name="inv_code"/>
+                                </div>
+                                <field name="inv_sequence_number_next"/>
+                                <field name="inv_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="bill" string="Bill Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="bill_code"/>
+                                </div>
+                                <div>
+                                    <field name="bill_code"/>
+                                </div>
+                                <field name="bill_sequence_number_next"/>
+                                <field name="bill_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="Credit" string="Credit Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="credit_code"/>
+                                </div>
+                                <div>
+                                    <field name="credit_code"/>
+                                </div>
+                                <field name="credit_sequence_number_next"/>
+                                <field name="credit_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="refund" string="Refund Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="refund_code"/>
+                                </div>
+                                <div>
+                                    <field name="refund_code"/>
+                                </div>
+                                <field name="refund_sequence_number_next"/>
+                                <field name="refund_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="out_receipt" string="Invoice Receipt Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="out_receipt_code"/>
+                                </div>
+                                <div>
+                                    <field name="out_receipt_code"/>
+                                </div>
+                                <field name="out_receipt_sequence_number_next"/>
+                                <field name="out_receipt_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="in_receipt" string="Bill Receipt Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="in_receipt_code"/>
+                                </div>
+                                <div>
+                                    <field name="in_receipt_code"/>
+                                </div>
+                                <field name="in_receipt_sequence_number_next"/>
+                                <field name="in_receipt_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="cus" string="Customer Payment Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="cus_code"/>
+                                </div>
+                                <div>
+                                    <field name="cus_code"/>
+                                </div>
+                                <field name="cus_sequence_number_next"/>
+                                <field name="cus_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="ven" string="Vendor Payment Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="ven_code"/>
+                                </div>
+                                <div>
+                                    <field name="ven_code"/>
+                                </div>
+                                <field name="ven_sequence_number_next"/>
+                                <field name="ven_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="cus_out" string="Customer/Out Payment Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="cusout_code"/>
+                                </div>
+                                <div>
+                                    <field name="cusout_code"/>
+                                </div>
+                                <field name="cusout_sequence_number_next"/>
+                                <field name="cusout_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                            <group name="ven_out" string="Vendor/Out Payment Generate Code">
+                                <div class="o_row o_td_label">
+                                    <label for="venout_code"/>
+                                </div>
+                                <div>
+                                    <field name="venout_code"/>
+                                </div>
+                                <field name="venout_sequence_number_next"/>
+                                <field name="venout_sequence_id" required="0" attrs="{'readonly': 1}" groups="base.group_no_one"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

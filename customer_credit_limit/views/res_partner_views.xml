@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_property_form_credit-limit" model="ir.ui.view">
+            <field name="name">res.partner.product.property.form.credit-limit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="product.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_product_pricelist']" position="after">
+                    <field name="amount_due" invisible="1"/>
+                    <field name="credit_limit" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"/>
+                    <field name="over_credit" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

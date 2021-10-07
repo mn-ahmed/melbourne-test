@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aged_payable_report_tree" model="ir.ui.view">
+        <field name="name">aged.payable.report.tree</field>
+        <field name="model">aged.payable.report</field>
+        <field name="arch" type="xml">
+            <tree string="Aged Payable" create="false">
+                <field name="vendor_code" optional="show"/>
+                <field name="vendor_name" optional="show"/>
+                <field name="contact_name" optional="show"/>
+                <field name="branch" optional="show"/>
+                <field name="date" optional="show"/>
+                <field name="due_date" optional="show"/>
+                <field name="po_number" optional="show"/>
+                <field name="invoice_payment_term_id" optional="show"/>
+                <field name="age_day" optional="show"/>
+                <field name="vendor_bill" optional="show"/>
+                <field name="total_0_under" optional="show"/>
+                <field name="total_10" optional="show"/>
+                <field name="total_20" optional="show"/>
+                <field name="total_30" optional="show"/>
+                <field name="total_30_over" optional="show"/>
+                <field name="amount_due_usd" optional="show"/>
+                <field name="amount_due_cny" optional="show"/>
+                <field name="amount_due_euro" optional="show"/>
+                <field name="amount_due_mmk" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_aged_payable_report_pivot" model="ir.ui.view">
+        <field name="name">aged.payable.report.pivot</field>
+        <field name="model">aged.payable.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Aged Payable">
+                <field name="vendor_code"/>
+                <field name="vendor_name"/>
+                <field name="contact_name"/>
+                <field name="branch"/>
+                <field name="date"/>
+                <field name="due_date"/>
+                <field name="po_number"/>
+                <field name="invoice_payment_term_id"/>
+                <field name="age_day"/>
+                <field name="vendor_bill"/>
+                <field name="total_0_under"/>
+                <field name="total_10"/>
+                <field name="total_20"/>
+                <field name="total_30"/>
+                <field name="total_30_over"/>
+                <field name="amount_due_usd"/>
+                <field name="amount_due_cny"/>
+                <field name="amount_due_euro"/>
+                <field name="amount_due_mmk"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_aged_payable_report_search" model="ir.ui.view">
+        <field name="name">aged.payable.report.search</field>
+        <field name="model">aged.payable.report</field>
+        <field name="arch" type="xml">
+            <search string="Aged Payable">
+                <field name="vendor_code"/>
+                <field name="vendor_name"/>
+                <field name="contact_name"/>
+                <field name="branch"/>
+                <field name="date"/>
+                <field name="due_date"/>
+                <field name="po_number"/>
+                <field name="invoice_payment_term_id"/>
+                <field name="age_day"/>
+                <field name="vendor_bill"/>
+                <field name="amount_due_usd"/>
+                <field name="amount_due_cny"/>
+                <field name="amount_due_euro"/>
+                <field name="amount_due_mmk"/>
+                <group expand="1" string="Group By">
+                    <filter string="Vendor Code" name="vendor_code" context="{'group_by':'vendor_code'}"/>
+                    <filter string="Name" name="group_vendor_name" context="{'group_by':'vendor_name'}"/>
+                    <filter string="Contact" name="contact_name" context="{'group_by':'contact_name'}"/>
+                    <filter string="Branch" name="group_by_branch" context="{'group_by':'branch'}"/>
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                    <filter string="Due Date" name="due_date" context="{'group_by':'due_date'}"/>
+                    <filter string="P.O No" name="po_number" context="{'group_by':'po_number'}"/>
+                    <filter string="Terms" name="invoice_payment_term_id" context="{'group_by':'invoice_payment_term_id'}"/>
+
+                    <filter string="Age Days" name="age_day" context="{'group_by':'age_day'}"/>
+                    <filter string="Invoice/CM#" name="vendor_bill" context="{'group_by':'vendor_bill'}"/>
+
+                    <separator/>
+                    <filter string="Not Due" name="total_0_under" context="{'group_by':'total_0_under'}"/>
+                    <filter string="0-10" name="total_10" context="{'group_by':'total_10'}"/>
+                    <filter string="10-20" name="total_20" context="{'group_by':'total_20'}"/>
+                    <filter string="20-30" name="total_30" context="{'group_by':'total_30'}"/>
+                    <filter string="Over 30 Days" name="total_30_over" context="{'group_by':'total_30_over'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_aged_payable_tree_view_report" model="ir.actions.act_window">
+        <field name="name">Aged Payable</field>
+        <field name="res_model">aged.payable.report</field>
+        <field name="view_mode">tree,pivot</field>
+        <!-- <field name="context">{'search_default_group_vendor_name': 1}</field> -->
+        <field name="search_view_id" ref="view_aged_payable_report_search"/>
+    </record>
+
+   <menuitem id="menu_aged_payable_report"
+              name="Aged Payable"
+              action="action_aged_payable_tree_view_report"
+              sequence="30"
+              parent="purchase.purchase_report"/>
+
+</odoo>

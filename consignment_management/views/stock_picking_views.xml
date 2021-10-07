@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scheduled_date']" position="after">
+                    <field name="consignment" invisible="1"/>
+                    <field name="consignment_transfer_id" invisible="1"/>
+                    <field name="consignment_return_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_stock_picking_consignment_return" model="ir.actions.act_window">
+            <field name="name">Consignment Return</field>
+            <field name="res_model">stock.picking</field>
+            <field name="domain">[('consignment', '=', True),
+                                  ('picking_type_code', '=', 'internal'),
+                                  ('consignment_return_id', '!=', False)]</field>
+            <field name="context">{'default_consignment': 1}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a consignment return here.
+                </p>
+                <p>
+                    You'll be able to manage your consignment returns here.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

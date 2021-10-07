@@ -1,0 +1,313 @@
+<odoo>
+     <template id="report_header_melbroune">
+            <div class="header" style="width:100%;height:109px;">
+                <div class="row" style="width:100%">
+                    <div class="col-md-4" style="width:30%">
+                        <img class="img img-responsive" t-att-src="'/report_form/static/description/img_2.png'" height="70" width="360" />
+                    </div>
+                    <div class="col-md-2" style="width:30%">
+
+                    </div>
+                    <div class="col-md-6" style="width:40%;">
+                        <div class="row" style="width:100%;margin-left:75px;text-align:right">
+
+                             <span style="font-size:18px;margin-left:40px">
+                                 <strong>Melbourne Company Limited</strong>
+                             </span>
+                            <br/>
+                            <span style="font-size:13px;">Room ( Ma )-35, Da Nin Choung Part Lane,</span><br/>
+                            <span style="font-size:13px;"> Saw Byar Gyi Gone,</span><br/>
+
+                            <span style="font-size:13px;">Yangon,Myanmar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   </template>
+     <template id="report_tax_invoice_document">
+        <t t-call="web.external_layout">
+         <t t-set="o" t-value="o.with_context(lang=lang)"/>
+          <div class="page"  style="width:100%;font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;">
+                    <hr style="color:#73264d"/>
+                    <div class="row" style="width:100%">
+                        <div class="col-md-6" style="width:50%">
+                            <div class="row" style="margin-left:10px">
+                                <span>
+                                    <strong>Invoice To:</strong>
+                                </span>
+                                <br/>
+                                <span t-esc="o.partner_id" style="font-size:14px" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            </div>
+                            <div class="row" style="margin-left:10px">
+                                <span><strong>Email:</strong></span><br/>
+                                <span t-esc="o.partner_id.email" style="font-size:14px"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="width:50%;font-size:14px;margin-left:45px;color:white">
+                            <div class="row" style="width:100%">
+                                <div class="col-md-2" style="width:30%"/>
+                                <div class="col-md-4" style="width:30%;background-color:#87CEEB">
+                                    <span>Invoice No:</span>
+                                </div>
+                                <div class="col-md-6" style="width:40%;text-align:right ;background-color:#87CEEB">
+                                    <span t-esc="o.name"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div style="margin-top:-12px">
+                                <div class="row" style="width:100%">
+                                    <div class="col-md-2" style="width:30%"/>
+                                    <div class="col-md-4" style="width:30%;background-color:#87CEEB">
+                                        <span>Invoice Date:</span>
+                                    </div>
+                                    <div class="col-md-6" style="width:40%;text-align:right;background-color:#87CEEB">
+                                        <span t-esc="o.invoice_date"/>
+                                    </div>
+                                </div>
+                                <div class="row" style="width:100%">
+                                    <div class="col-md-2" style="width:30%"/>
+                                    <div class="col-md-4" style="width:30%;background-color:#87CEEB">
+                                        <span>SO:</span>
+                                    </div>
+                                    <div class="col-md-6" style="width:40%;text-align:right;background-color:#87CEEB">
+                                        <span t-esc="o.invoice_origin"/>
+                                    </div>
+                                </div>
+                                <div class="row" style="width:100%">
+                                    <div class="col-md-2" style="width:30%"/>
+                                    <div class="col-md-4" style="width:30%;background-color:#87CEEB">
+                                        <span>Order Date:</span>
+                                    </div>
+                                    <div class="col-md-6" style="width:40%;text-align:right;background-color:#87CEEB">
+
+                                        <t t-if="o.so_date">
+                                         <span t-esc="o.so_date.strftime('%Y-%m-%d')"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="row" style="width:100%">
+                                    <div class="col-md-2" style="width:30%"/>
+                                    <div class="col-md-4" style="width:30%;background-color:#87CEEB">
+                                        <span>Due Date:</span>
+                                    </div>
+                                    <div class="col-md-6" style="width:40%;text-align:right;background-color:#87CEEB">
+                                        <span t-esc="o.invoice_date_due"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                    <table class="table table-sm o_main_table" name="invoice_line_table" style="font-size:14px;width:100%">
+                        <thead>
+                            <tr>
+                                <th name="th_description" class="text-center" style="width:10%;color:white;background-color:#87CEEB"><strong>Sr.</strong></th>
+                                <th name="th_source" class="text-center" style="width:20%;color:white;background-color:#87CEEB"><strong>Description</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:10%;color:white;background-color:#87CEEB"><strong>Quantity</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:10%;color:white;background-color:#87CEEB"><strong>Unit Price</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:15%;color:white;background-color:#87CEEB"><strong>Discount Type</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:10%;color:white;background-color:#87CEEB"><strong>Discount</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:10%;color:white;background-color:#87CEEB"><strong>Taxes</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:15%;color:white;background-color:#87CEEB"><strong>Price</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="no" t-value="0"/>
+
+                             <tr t-foreach="o.invoice_line_ids" t-as="move" style="width:100%">
+                                 <t t-set="no" t-value="no+1"/>
+                                    <td style="text-align:center;color:black;width:10%">
+                                        <span t-esc="no"/>
+                                     </td>
+                                    <td style="text-align:left;vertical-align:middle;width:20%;">
+                                         <span t-esc="move.name"/>
+                                    </td>
+                                    <td style="text-align:left;color:black;text-align:center;width:10%;">
+                                         <span t-esc="move.quantity"/>
+                                    </td>
+                                    <td style="text-align:right;width:10%;">
+                                       <span t-esc="'{0:,.2f}'.format(move.price_unit)"/>
+                                    </td>
+                                    <td style="text-align:center;width:15%;">
+                                      <t t-if="move.discount_type=='fixed'">
+                                          <span>Fixed</span>
+                                      </t>
+                                        <t t-if="move.discount_type!='fixed'">
+                                          <strong>%</strong>
+                                      </t>
+                                    </td>
+                                       <td style="text-align:center;width:10%;">
+                                           <span t-esc="move.discount_amount"/>
+                                        </td>
+                                     <td name="td_taxes" class="text-right">
+                                        <span t-esc="', '.join(map(lambda x: (x.description or x.name), move.tax_ids))"/>
+                                    </td>
+
+                                    <td style="text-align:right;width:15%;">
+                                       <span t-esc="'{0:,.2f}'.format(move.price_subtotal)"/>
+                                    </td>
+                             </tr>
+<!--                            <tr>-->
+<!--                                <th style="width:10%;border:none"></th>-->
+<!--                                <th style="width:40%;border:none"></th>-->
+<!--                                <th style="width:10%;border:none"></th>-->
+<!--                                <th style="width:15%;border-bottom:1px solid black"><strong>SubTotal</strong></th>-->
+<!--                                <th style="width:10% ;border-bottom:1px solid black"></th>-->
+<!--                                <th style="width:15%;border-bottom:1px solid black;text-align:right"><span t-esc="o.amount_untaxed"/></th>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th style="width:10%;border:none"></th>-->
+<!--                                <th style="width:40%;border:none"></th>-->
+<!--                                <th style="width:10%;border:none"></th>-->
+<!--                                <th style="width:15%;border-bottom:1px solid black"><strong>Taxes</strong></th>-->
+<!--                                <th style="width:10% ;border-bottom:1px solid black"></th>-->
+<!--                                <th style="width:15%;border-bottom:1px solid black;text-align:right">-->
+<!--                                   <span t-esc="o.amount_tax"/>-->
+<!--                                </th>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th style="width:10%;border:none"></th>-->
+<!--                                <th style="width:40%;border:none"></th>-->
+<!--                                <th style="width:10%;border:none"></th>-->
+<!--                                <th style="width:15%;border-bottom:1px solid black"><strong>TOTAL</strong></th>-->
+<!--                                <th style="width:10% ;border-bottom:1px solid black"></th>-->
+<!--                                <th style="width:15%;border-bottom:1px solid black;text-align:right"><span t-esc="o.amount_total"/></th>-->
+<!--                            </tr>-->
+                        </tbody>
+                    </table>
+                     <div class="row" style="width:100%">
+                     <div class="col-md-6" style="width:50%"></div>
+                     <div class="col-md-6" style="width:50%;font-size:13px;margin-left:60px">
+                         <div class="row" style="width:100%">
+                             <div class="col-md-8" style="width:70%;text-align:right">
+                                 <strong>
+                                     Untaxed Amount:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right">
+                                 <span t-field="o.amount_untaxed"/>
+                             </div>
+                         </div>
+                         <div class="row" style="width:100%">
+                             <div class="col-md-8" style="width:70%;text-align:right">
+                                 <strong>
+                                     Total Line Discount Amount:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right" >
+                                <span t-esc="'{0:,.2f}'.format(o.total_discount_amount)"/><span>K</span>
+                             </div>
+                         </div>
+                         <div class="row" style="width:100%">
+                             <div class="col-md-8" style="width:70%;text-align:right">
+                                 <strong>
+                                     After Line Discount:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right" >
+                                 <span t-field="o.amount_total_line_disc"/>
+                             </div>
+                         </div>
+                         <div class="row" style="width:100%">
+                             <div class="col-md-8" style="width:70%;text-align:right">
+                                 <strong>
+                                     Taxes:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right" >
+                                 <span t-field="o.amount_tax"/>
+                             </div>
+                         </div>
+                         <div class="row" style="width:100%">
+                             <div class="col-md-8" style="width:70%;text-align:right">
+                                 <strong>
+                                    Total After Tax:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right" >
+                                 <span t-field="o.amount_total_after_tax"/>
+                             </div>
+                         </div>
+                         <div class="row" style="width:100%">
+                             <div class="col-md-8" style="width:70%;text-align:right">
+                                 <strong>
+                                    Global Discount:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right" >
+                                 <span t-field="o.amount_global_discount"/>
+                             </div>
+                         </div>
+                         <div class="row" style="width:100%;">
+                             <div class="col-md-4" style="width:40%;text-align:right"/>
+                             <div class="col-md-8" style="width:30%;text-align:right;border-top:1px solid black;border-bottom:1px solid black">
+                                 <strong>
+                                    Total:
+                                 </strong>
+                             </div>
+                             <div class="col-md-4" style="width:30%;text-align:right;border-top:1px solid black;border-bottom:1px solid black" >
+                                 <span t-field="o.amount_total"/>
+                             </div>
+                         </div>
+                 </div>
+             </div>
+                    <hr/>
+                    <strong>Payment History</strong>
+                    <br/>
+                   <table class="table table-sm o_main_table" name="invoice_payment_table" style="font-size:14px;width:100%">
+                        <thead>
+                            <tr>
+                                <th name="th_description" class="text-center" style="width:10%;color:white;background-color:#87CEEB"><strong>Sr.</strong></th>
+                                <th name="th_source" class="text-center" style="width:15%;color:white;background-color:#87CEEB"><strong>Date</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:40%;color:white;background-color:#87CEEB"><strong>Method</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:20%;color:white;background-color:#87CEEB"><strong>Ref.</strong></th>
+                                <th name="th_quantity" class="text-center" style="width:15%;color:white;background-color:#87CEEB"><strong>Amount</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="no" t-value="0"/>
+                             <tr t-foreach="o.env['account.payment'].search([]).filtered(lambda payment: o.id in  payment.invoice_ids.ids)" t-as="move" style="width:100%">
+                                 <t t-set="no" t-value="no+1"/>
+                                  <td style="text-align:center;color:black;width:10%">
+                                        <span t-esc="no"/>
+                                  </td>
+                                  <td style="text-align:center;color:black;width:10%">
+                                        <span t-esc="move.payment_date"/>
+                                  </td>
+                                  <td style="text-align:center;color:black;width:10%">
+                                        <span t-esc="move.journal_id.name"/>
+                                  </td>
+                                  <td style="text-align:center;color:black;width:10%">
+                                        <span t-esc="move.name"/>
+                                  </td>
+                                  <td style="text-align:right;color:black;width:10%">
+                                        <span t-esc="move.amount"/>
+                                  </td>
+                             </tr>
+                        </tbody>
+                    </table>
+                   <br/><br/><br/>
+                    <div style="margin-left:-22px">
+                      <ul>
+                          <li><strong>Payment Terms:</strong> <span t-esc="o.invoice_payment_term_id.name"/><br/></li>
+                          <li><strong>Comment:</strong> <span t-esc="o.invoice_payment_ref"/><br/></li>
+<!--                          <li><strong>Fiscal Position Remarks:</strong> <span t-esc="o.fiscal_position_id.name"/></li>-->
+                      </ul>
+                    </div>
+                </div>
+        </t>
+     </template>
+      <template id="report_tax_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report_form.report_header_melbroune" t-lang="o.partner_id.lang"/>
+                    <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>
+                    <t t-call="report_form.report_tax_invoice_document" t-lang="lang"/>
+                </t>
+            </t>
+      </template>
+</odoo>

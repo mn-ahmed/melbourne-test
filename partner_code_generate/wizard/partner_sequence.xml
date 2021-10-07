@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="partner_generate_view" model="ir.ui.view">
+            <field name="name">partner.generate.view</field>
+            <field name="model">generate.partner.sequence</field>
+            <field name="arch" type="xml">
+                <form string="Generate Sequence">
+                    <group>
+                        <p>This wizard will generate sequence number for selected partners!</p>
+                    </group>
+                    <footer>
+                        <button string="Generate" name="action_generate_sequence" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_view_partner_sequence" model="ir.actions.act_window">
+            <field name="name">Generate Sequence</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">generate.partner.sequence</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="partner_generate_view" />
+            <field name="target">new</field>
+        </record>
+        <act_window id="res_partner_act_generate_seq_list"
+            name="Generate Code"
+            binding_model="res.partner"
+            res_model="generate.partner.sequence"
+            binding_views="list"
+            view_mode="form"
+            target="new"
+        />
+        <act_window id="res_partner_act_generate_seq_form"
+            name="Generate Code"
+            binding_model="res.partner"
+            res_model="generate.partner.sequence"
+            binding_views="form"
+            view_mode="form"
+            target="new"
+        />
+
+    </data>
+</odoo>

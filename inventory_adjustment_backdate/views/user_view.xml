@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_users_form_backdate" model="ir.ui.view">
+        <field name="name">res.users.form.backdate</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="Inventory Backdate" name="inventory_backdate">
+                    <group>
+                        <group>
+                            <field name="allow_current_date"/>
+                            <field name="allow_future_date"/>
+                        </group>
+                        <group>
+                            <field name="allow_back_date"/>
+                            <field name="back_date_limit" attrs="{'invisible': [('allow_back_date', '=', False)]}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

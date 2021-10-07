@@ -1,0 +1,133 @@
+<odoo>
+  <data>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+      <field name="name">sale.order.form.inherit</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//header//field[@name='state']" position="replace">
+            <field name="state" widget="statusbar" statusbar_visible="draft,sent,confirm,sale"/>
+        </xpath>
+
+        <xpath expr="//button[@name='action_quotation_send']" position="after">
+            <button name="action_sale_confirm" string="Sale Confirm" class="btn-primary" type="object"
+                    attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+        </xpath>
+        <xpath expr="//button[@name='action_confirm'][2]" position="replace">
+             <button name="action_confirm" string="Confirm" type="object"
+                     attrs="{'invisible': [('state', 'not in', ['confirm'])]}"/>
+        </xpath>
+        <xpath expr="//field[@name='validity_date']" position="after">
+            <field name="delivery_date" attrs="{'readonly': [('state', 'in', 'sale')]}"/>
+            <field name="city"/>
+        </xpath>
+        <xpath expr="//field[@name='partner_id']" position="after">
+            <label for="" name="address_name">
+                <b invisible="1">Address</b>
+            </label>
+            <div class="o_address_format">
+                <field name="street" placeholder="Street..." class="o_address_street" />
+                <field name="street2" placeholder="Street..." class="o_address_street"/>
+                <field name="township_id" placeholder="Township..." class="o_address_street" options='{"no_open": True}'/>
+                <field name="city" placeholder="City" class="o_address_city"/>
+                <field name="state_id" invisible="1"/>
+                <field name="ph_no" placeholder="Phone" class="o_address_phone"/>
+                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                <field name="country_id" placeholder="ZIP" class="o_address_street" options='{"no_open": True}'/>
+            </div>
+        </xpath>
+        <xpath expr="//field[@name='partner_invoice_id']" position="replace">
+           <field name="partner_invoice_id"  context="{'default_type':'invoice'}" options="{&quot;always_reload&quot;: True}"/>
+        </xpath>
+        <xpath expr="//field[@name='partner_shipping_id']" position="replace">
+           <field name="partner_shipping_id"  context="{'default_type':'delivery'}" options="{&quot;always_reload&quot;: True}"/>
+        </xpath>
+        <xpath expr="//field[@name='payment_term_id']" position="after">
+            <field name="contact_id" invisible="1"/>
+            <field name="contact_phone" invisible="1"/>
+            <field name="accept_person" invisible="1"/>
+            <field name="is_sample_created" invisible="1"/>
+            <field name="is_damage_created" invisible="1"/>
+        </xpath>
+
+        <xpath expr="//button[@name='action_quotation_send']" position="after">
+            <button name="create_sample"
+                    string="Create Sample"
+                    type="object"
+                    attrs="{'invisible' : ['|', ('is_sample_created', '=', True),('state', '!=', 'sale')]}"/>
+            <button name="create_damage"
+                    string="Create Damage"
+                    type="object"
+                    attrs="{'invisible' : [('state', '!=', 'sale')]}"/>
+        </xpath>
+
+        <xpath expr="//field[@name='user_id']" position="replace">
+        </xpath>
+        <xpath expr="//field[@name='team_id']" position="replace">
+        </xpath>
+
+        <xpath expr="//notebook//page//group[@name='sale_shipping']" position="replace">
+            <group name="sale_shipping">
+                    <field name="picking_policy"/>
+                    <label for="commitment_date" string="Delivery Date"/>
+                    <div class="o_row">
+                        <field name="commitment_date"/> <span class="text-muted">Expected: <field name="expected_date" widget="date"/></span>
+                    </div>
+              </group>
+        </xpath>
+
+        <xpath expr="//field[@name='partner_shipping_id']" position="after">
+            <field name="team_id" widget="selection"/>
+            <field name="user_id" string="Sale By" invisible="1"/>
+            <field name="sale_by" options='{"no_open": True,"no_create":True}'/>
+            <field name="department_id" options='{"no_open": True,"no_create":True}'/>
+            <field name="do_name" invisible="1"/>
+        </xpath>
+        <xpath expr="//page[@name='other_information']/group[1]/group[2]/field[@name='analytic_account_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+      </field>
+    </record>
+    <record id="view_sales_order_filter_inherit" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/field[@name='team_id']" position="after">
+              <field name="sale_by"/>
+            </xpath>
+            <xpath expr="//filter[@name='customer']" position="after">
+                <filter name="state_id" string="State" domain="[]" context="{'group_by': 'state_id'}"/>
+                <filter name="township_id" string="Township" domain="[]" context="{'group_by': 'township_id'}"/>
+                <filter name="city" string="City" domain="[]" context="{'group_by': 'city'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_tree_state" model="ir.ui.view">
+        <field name="name">sale.order.tree.state</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="replace">
+            </field>
+            <field name="amount_total" position="after">
+                <field name="state" optional="show"/>
+            </field>
+        </field>
+    </record>
+    <menuitem
+            id="invoice_sale_menu"
+            name="Invoice"
+            action="action_move_out_invoice_type_exten"
+            parent="sale.menu_sale_invoicing"
+             >
+             <!-- action="account.action_move_out_invoice_type" -->
+    </menuitem>
+      <menuitem id="menu_invoices_analysis_report"
+                name="Invoice Analysis Report"
+                parent="sale.menu_sale_report"
+                action="account.action_account_invoice_report_all"
+                sequence="10"/>
+  </data>
+</odoo>

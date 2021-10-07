@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem  id="menu_consignment_root"
+                   name="Consignment"
+                   parent="stock.menu_stock_root"
+                   sequence="5"/>
+        <menuitem  id="menu_res_partner_consignee"
+                   name="Consignee"
+                   parent="menu_consignment_root"
+                   action="action_res_partner_consignee"
+                   sequence="5"/>
+        <menuitem  id="menu_consignment_transfer"
+                   name="Consignment Transfer"
+                   parent="menu_consignment_root"
+                   action="action_consignment_transfer"
+                   sequence="10"/>
+        <menuitem  id="menu_consignment_order"
+                   name="Consignment Orders"
+                   parent="menu_consignment_root"
+                   action="action_consignment_order"
+                   sequence="15"/>
+        <menuitem  id="menu_consignment_return"
+                   name="Consignment Returns"
+                   parent="menu_consignment_root"
+                   action="action_consignment_return"
+                   sequence="20"/>
+        <menuitem  id="menu_consignment_stock_report"
+                   name="Consignment Report"
+                   parent="menu_consignment_root"
+                   action="action_consignment_report"
+                   sequence="25"/>
+    </data>
+</odoo>

@@ -1,0 +1,1 @@
+V1 - Added column Cost Price and Amount in inventory adjustment report.

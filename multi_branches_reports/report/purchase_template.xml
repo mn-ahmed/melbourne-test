@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_purchaseorder_inherited_branch" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//div[hasclass('page')]/div[2]/div[3]" position="after">
+            <div class="col-xs-4" t-if="o.branch_id">
+                <strong>Branch: </strong>
+                <p t-esc="o.branch_id.name"/>
+            </div>
+        </xpath>
+    </template>
+    <template id="report_purchasequotation_document_inherited_branch" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//div[hasclass('page')]/table" position="before">
+            <div class="row mt32 mb32">
+                <div class="col-3" t-if="o.branch_id">
+                    <strong>Branch: </strong>
+                    <p t-esc="o.branch_id.name"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

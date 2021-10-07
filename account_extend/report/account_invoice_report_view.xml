@@ -1,0 +1,14 @@
+<odoo>
+  <record id="view_account_invoice_report_search_inherit" model="ir.ui.view">
+        <field name="name">account.invoice.report.search</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="account.view_account_invoice_report_search"/>
+        <field name="arch" type="xml">
+           <xpath expr="//filter[@name='partner_id']" position="after">
+               <filter string="Partner State " name="state_id" context="{'group_by':'state_id'}" />
+               <filter string="Partner Township " name="township_id" context="{'group_by':'township_id'}" />
+               <filter string="Partner City " name="city_id" context="{'group_by':'city_id'}" />
+           </xpath>
+        </field>
+    </record>
+</odoo>

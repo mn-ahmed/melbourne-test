@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_inherited_branches" inherit_id="account.report_invoice_document">
+        <div name="reference" position="after">
+            <div class="col-auto mw-100 mb-2" t-if="o.branch_id" name="branch">
+                <strong>Branch:</strong>
+                <p class="m-0" t-field="o.branch_id"/>
+            </div>
+        </div>
+    </template>
+    <template id="report_payment_receipt_document_inherited_branches" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//div[hasclass('page')]/div[1]" position="inside">
+            <div class="col-6" t-if="o.branch_id">
+                <strong>Branch: </strong><span t-field="o.branch_id"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

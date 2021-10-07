@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_sale_delivery"
+            string="Sale Delivery "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="sale_extend.report_stock_sale_delivery" 
+            name="sale_extend.report_stock_sale_delivery"
+            print_report_name="'Sale Delivery- %s' % (object.name)"
+            menu='False'
+        />
+        <report 
+            id="action_report_sale_return"
+            string="Sale Return "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="sale_extend.report_stock_sale_return" 
+            name="sale_extend.report_stock_sale_return"
+            print_report_name="'Sale Return- %s' % (object.name)"
+            menu='False'
+        />
+    </data>
+</odoo>

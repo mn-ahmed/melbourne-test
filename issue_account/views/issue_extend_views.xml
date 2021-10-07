@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_give_form_account" model="ir.ui.view">
+            <field name="name">sample.give.form.account</field>
+            <field name="model">sample.give</field>
+            <field name="inherit_id" ref="sample_give_form.view_give_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page//field[@name='product_line']//form//field[@name='product_uom']" position="after">
+                    <field name="is_sample" />
+                </xpath>
+                <xpath expr="//notebook//page//field[@name='product_line']//tree//field[@name='product_uom']" position="after">
+                    <field name="is_sample" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_product_form_account" model="ir.ui.view">
+            <field name="name">damage.product.form.account</field>
+            <field name="model">damage.product</field>
+            <field name="inherit_id" ref="damage_form.view_product_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page//field[@name='product_line']//form//field[@name='product_uom']" position="after">
+                    <field name="is_damage"/>
+                </xpath>
+                <xpath expr="//notebook//page//field[@name='product_line']//tree//field[@name='product_uom']" position="after">
+                    <field name="is_damage" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

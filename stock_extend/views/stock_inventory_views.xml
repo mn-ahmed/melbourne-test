@@ -1,0 +1,77 @@
+<odoo>
+  <data>    
+    <record id="view_inventory_form_inherit" model="ir.ui.view">
+      <field name="name">stock.inventory.form.inherit</field>
+      <field name="model">stock.inventory</field>
+      <field name="inherit_id" ref="stock.view_inventory_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='product_ids']" position="after">
+          <field name="analytic_account_id"/>
+        </xpath>
+        <xpath expr="//field[@name='prefill_counted_quantity']" position="after">
+          <field name="total_remark"/>
+        </xpath>
+        <xpath expr="//sheet//group" position="after">
+          <notebook attrs="{'invisible':[('state','=','draft')]}">
+            <page string="Adjustment Lines" >
+              <field name="line_ids" string="Inventory Details" >
+                 <tree default_order="location_id,product_id" editable="top" string="Inventory Details" js_class="inventory_validate_button" decoration-danger="product_qty != theoretical_qty" decoration-muted="product_qty == theoretical_qty" decoration-bf="is_editable">
+                    <field name="company_id" invisible="1"/>
+                    <field name="product_tracking" invisible="1"/>
+                    <field name="is_editable" invisible="1"/>
+                    <field name="outdated" invisible="1"/>
+                    <field name="product_id" />
+                    <field name="location_id"/>
+                    <field name="inventory_date" optional="hide" width="0.8"/>
+                    <field name="theoretical_qty" string="On Hand" width="0.5" force_save="1" readonly="1" optional="show"/>
+                    <button name="action_refresh_quantity" string="Refresh quantity" title="Refresh quantity" icon="fa-refresh" type="object" attrs="{'invisible': [('outdated', '=', False)]}"/>
+                    <field name="product_qty"  width="0.5" string="Counted"/>
+                    <field name="difference_qty" optional="show" width="0.5"/>
+                    <field name="product_uom_id" string="UoM" groups="uom.group_uom" width="0.3" force_save="1"/>
+                    <field name="remark" optional="hide"/>
+
+                 </tree>
+              </field>
+            </page>
+          </notebook>
+        </xpath>
+      </field>
+    </record>
+    <record id="view_inventory_line_form_inherit" model="ir.ui.view">
+      <field name="name">stock.inventory.line.form.inherit</field>
+      <field name="model">stock.inventory.line</field>
+      <field name="inherit_id" ref="stock.stock_inventory_line_tree2"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='difference_qty']" position="after">
+          <field name="remark"/>
+        </xpath>
+      </field>
+    </record>
+     <!--          znl 1-9-20 THis Action window is is new added field -->
+    <record id="stock_move_line_action_tree" model="ir.actions.act_window">
+            <field name="name">Inventory</field>
+            <field name="res_model">stock.inventory.line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.stock_inventory_line_tree2"/>
+            <field name="context"></field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    There's no product move yet
+                </p><p>
+                    This menu gives you the full traceability of inventory operations on a specific product.
+                    You can filter on the product to see all the past movements for the product.
+                </p>
+            </field>
+    </record>
+      <!--          znl 1-9-20 THis Menuitem is new added  -->
+    <menuitem
+            id="adjustment_line_id"
+            name="Adjustment Line"
+            action="stock_extend.stock_move_line_action_tree"
+            parent="stock.menu_stock_warehouse_mgmt"
+            sequence="10"
+             >
+    </menuitem>    
+  </data>
+</odoo>
