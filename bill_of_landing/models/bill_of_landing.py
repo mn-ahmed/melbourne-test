@@ -45,14 +45,23 @@ class BillLanding(models.Model):
             ('cancel', 'Cancelled')
     ], string='Status', readonly=True, index=True, copy=False, default='draft', tracking=True)
     invoice_number = fields.Char('Invoice Number',  tracking=True)
+    date = fields.Date('BL Date', required=True, tracking=True, default=fields.date.today())
     bill_number = fields.Many2one('account.move', string='Vendor Bill Number', tracking=True)
     inv_currency_id = fields.Many2one('res.currency', string='Inv Currency', related='bill_number.currency_id', store=True)
-    currency_id = fields.Many2one('res.currency', string='Currency', default=_default_get_currency)
     invoice_amount = fields.Float('Actual Invoice Amount', tracking=True)
     sparepart_invoice = fields.Char('Spare Parts Invoice', tracking=True)
     declare_inv_amount = fields.Char('Declare Invoice Amount', tracking=True)
-    freight_charges = fields.Char('Freight Charges', tracking=True)
-    insurance = fields.Char('Insurance', tracking=True)
+    freight_currency_id = fields.Many2one('res.currency', string='Freight Currency', default=_default_get_currency)
+    freight_rate = fields.Float(digits=(0, 12), default=1.0, string='Freight Rate', related='freight_currency_id.rate',
+                                help='The rate of the currency to the currency of rate 1')
+    freight_price_unit = fields.Float('Freight Cost', digits='Product Price', required=True)
+    freight_charges = fields.Monetary(currency_field="freight_currency_id", string='Freight Charges', store=True, copy=True)
+    insurance_currency_id = fields.Many2one('res.currency', string='Insurance Currency', default=_default_get_currency)
+    insurance_rate = fields.Float(digits=(0, 12), default=1.0, string='Insurance Rate', related='insurance_currency_id.rate',
+                                  help='The rate of the currency to the currency of rate 1')
+    insurance_price_unit = fields.Float('Insurance Cost', digits='Product Price', required=True)
+    insurance = fields.Monetary(currency_field="insurance_currency_id", string='Insurance Charges', store=True, copy=True)
+    company_id = fields.Many2one('res.company', string="Company", required=True, index=True, default=lambda self: self.env.company)
     certificate_number = fields.Char('Cretificate Number', tracking=True)
     hs_code = fields.Char('Apply HS Code Charges', tracking=True)
     po_charges = fields.Char('PO Charges', tracking=True)
@@ -65,12 +74,42 @@ class BillLanding(models.Model):
     user_id = fields.Many2one('res.users', string='Bill Representative', default=lambda self: self.env.user)
 
     _sql_constraints = [
-        ('name_uniq', 'UNIQUE (name)', 'You can not have two B/L Number with the same name !')
+        ('name_uniq', 'UNIQUE (name)', 'You can not have two B/L Number with the same name !'),
+        ('date_check', "CHECK ( (etd_date <= eta_date))", "The ETD date must be anterior to the ETA date.")
     ]
 
     @api.depends('custom_duty', 'commerial_tax', 'advanced_Tax', 'other_charges')
     def _get_po_amount(self):
         self.po_amount = self.custom_duty + self.commerial_tax + self.advanced_Tax + self.other_charges
+
+    @api.onchange('freight_charges')
+    def _onchange_freight_currency(self):
+        for rec in self:
+            if rec.freight_charges:
+                date = rec.date
+                company = rec.company_id
+                company_currency = rec.company_id.currency_id
+                if rec.freight_currency_id != company_currency:
+                    rec.freight_price_unit = rec.freight_currency_id._convert(rec.freight_charges,
+                                                                      company_currency,
+                                                                      company, date)
+                else:
+                    rec.freight_price_unit = rec.freight_charges
+
+    @api.onchange("insurance")
+    def _onchange_insurance_currency(self):
+        for rec in self:
+            if rec.insurance:
+                date = rec.date
+                company = rec.company_id
+                company_currency = rec.company_id.currency_id
+                if rec.insurance_currency_id != company_currency:
+                    rec.insurance_price_unit = rec.insurance_currency_id._convert(rec.insurance,
+                                                                        company_currency,
+                                                                        company, date)
+                else:
+                    rec.insurance_price_unit = rec.insurance
+
 
     @api.onchange('bill_number')
     def onchange_bill_number(self):

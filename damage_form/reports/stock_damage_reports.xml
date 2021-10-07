@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_damage_received"
+            string="Damage Receipt "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="damage_form.report_stock_damage_receipt" 
+            name="damage_form.report_stock_damage_receipt"
+            print_report_name="'Damage Receipt- %s' % (object.name)"
+            menu='False'
+        />
+        <report 
+            id="action_damage_delivery"
+            string="Damage Delivery "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="damage_form.report_stock_damage_delivery" 
+            name="damage_form.report_stock_damage_delivery"
+            print_report_name="'Damaged Delivery- %s' % (object.name)"
+            menu='False'
+        />
+    </data>
+</odoo>

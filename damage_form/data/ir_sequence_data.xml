@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="damage_issue_code" model="ir.sequence">
+            <field name="name">Damage Issue Code</field>
+            <field name="code">damage.product</field>
+            <field name="prefix">DAM/%(range_year)s/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

@@ -2,7 +2,7 @@
 {
     'name': 'Bill Of Landing',
 
-    'version': '0.2',
+    'version': '0.3',
 
     'summary': 'Added bill of landing form',
 

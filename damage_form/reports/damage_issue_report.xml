@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_damage_product"
+            string="Damage Report "
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="damage_form.report_damage_product" 
+            name="damage_form.report_damage_product"
+            print_report_name="'Damage Issue Report- %s' % (object.name)"
+            menu='False'
+        />
+    </data>
+</odoo>
